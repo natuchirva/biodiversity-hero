@@ -363,7 +363,7 @@ const STEPS = [
     id:'basics', emoji:'🦸', title:'Create Your Hero',
     hint:'Tell us the most important things about your character!',
     fields:[
-      {key:'name', label:'What is your hero's name? *', type:'text', placeholder:'E.g. Luna, Finn, Green Cactus...'},
+      {key:'name', label:"What is your hero's name? *", type:'text', placeholder:'E.g. Luna, Finn, Green Cactus...'},
       {key:'creature', label:'What kind of creature is it? *', type:'text', placeholder:'Animal, plant, magical creature...'},
       {key:'home', label:'Where does your hero live?', type:'text', placeholder:'Forest, ocean, mountains, city...'},
       {key:'madeof', label:'What is it made of or drawn with?', type:'text', placeholder:'Paper, fabric, pencil, natural materials...'},
@@ -372,7 +372,7 @@ const STEPS = [
     ]
   },
   {
-    id:'world', emoji:'🌍', title:'Hero's World',
+    id:'world', emoji:'🌍', title:"Hero's World",
     hint:'Now tell us how your hero lives!',
     fields:[
       {key:'friends', label:'Who are their friends?', type:'text', placeholder:'Other animals, plants, people...'},
@@ -1079,7 +1079,7 @@ function openProject(id) {
         p.char_special ? '✨ ' + p.char_special : null,
       ])}
 
-      ${section('🌍','Hero's World', [
+      ${section('🌍',"Hero's World", [
         p.world_friends ? '👫 Friends: ' + p.world_friends : null,
         p.world_food ? '🍃 Food: ' + p.world_food : null,
         p.world_daily ? '☀️ Every day: ' + p.world_daily : null,
