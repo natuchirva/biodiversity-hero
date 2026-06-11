@@ -297,9 +297,31 @@ textarea ~ .mic-btn, textarea + .mic-btn{top:.75rem;transform:none}
   <div class="logo-circle">🌿</div>
   <h1 class="landing-title">Create Your<br>Biodiversity Hero!</h1>
   <p class="landing-sub">Придумай своего героя, напиши историю и создай мультфильм о природе — шаг за шагом, как настоящий режиссёр!</p>
-  <button class="btn-start" onclick="startQuest()">🚀 Начать приключение!</button>
+  <button class="btn-start" onclick="showLogin('quest')">🚀 Начать приключение!</button>
   <button class="btn-gallery" onclick="landingToGallery()" style="margin-top:.75rem">🌍 Смотреть галерею героев</button>
   <div class="landing-animals">🦋 🐸 🦊 🌱 🐝 🦜</div>
+</div>
+
+<!-- LOGIN -->
+<div id="login-screen" style="display:none;min-height:100vh;display:none;flex-direction:column;align-items:center;justify-content:center;padding:2rem;text-align:center">
+  <div style="background:white;border-radius:24px;padding:2.5rem 2rem;max-width:380px;width:100%;box-shadow:0 4px 24px var(--shadow)">
+    <div style="font-size:3rem;margin-bottom:.75rem" id="login-emoji">🌿</div>
+    <h2 style="font-family:'Fredoka One',cursive;color:var(--green);font-size:1.8rem;margin-bottom:.4rem" id="login-title">Как тебя зовут?</h2>
+    <p style="font-size:.9rem;color:#888;margin-bottom:1.25rem" id="login-hint">Введи своё имя — и твои герои всегда будут с тобой!</p>
+    <input type="text" id="login-name-input" placeholder="Твоё имя..."
+      style="width:100%;border:2px solid #B7E4C7;border-radius:12px;padding:.7rem 1rem;font-family:'Nunito',sans-serif;font-size:1.1rem;outline:none;margin-bottom:.75rem;text-align:center"
+      onkeydown="if(event.key==='Enter')loginAndContinue()"
+      oninput="document.getElementById('login-error').textContent=''">
+    <div id="login-error" style="color:#e74c3c;font-size:.85rem;margin-bottom:.5rem;min-height:1.2em"></div>
+    <button onclick="loginAndContinue()"
+      style="width:100%;background:var(--green);color:white;border:none;border-radius:50px;padding:.75rem;font-family:'Fredoka One',cursive;font-size:1.2rem;cursor:pointer;transition:background .15s">
+      Поехали! 🚀
+    </button>
+    <button onclick="skipLogin()"
+      style="width:100%;background:none;border:none;color:#aaa;font-size:.85rem;margin-top:.75rem;cursor:pointer;font-family:'Nunito',sans-serif">
+      Продолжить без имени
+    </button>
+  </div>
 </div>
 
 <!-- QUEST -->
@@ -310,6 +332,7 @@ textarea ~ .mic-btn, textarea + .mic-btn{top:.75rem;transform:none}
       <div style="display:flex;align-items:center;gap:.75rem">
         <span class="progress-count" id="step-count">1 / 9</span>
         <button onclick="goToGallery()" style="background:none;border:1.5px solid #B7E4C7;border-radius:50px;padding:.2rem .75rem;font-family:'Nunito',sans-serif;font-size:.8rem;color:#52B788;cursor:pointer;font-weight:700" title="Вернуться в галерею">🌍 Галерея</button>
+        <span id="current-user-badge" style="display:none;font-size:.78rem;background:var(--green-pale);color:var(--green);border-radius:50px;padding:.2rem .7rem;font-weight:700"></span>
       </div>
     </div>
     <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:11%"></div></div>
@@ -465,10 +488,53 @@ const MATERIALS = {
 let state = {};
 let currentStep = 0;
 const TOTAL = STEPS.length;
+let currentUserName = localStorage.getItem('bh_username') || '';
+let loginTarget = 'quest'; // 'quest' or 'gallery'
+
+function showLogin(target) {
+  loginTarget = target || 'quest';
+  // If already have a name, skip login
+  if (currentUserName) {
+    if (target === 'quest') startQuest();
+    return;
+  }
+  document.getElementById('landing').style.display = 'none';
+  const ls = document.getElementById('login-screen');
+  ls.style.display = 'flex';
+  ls.style.flexDirection = 'column';
+  setTimeout(() => document.getElementById('login-name-input').focus(), 100);
+}
+
+function loginAndContinue() {
+  const name = document.getElementById('login-name-input').value.trim();
+  if (!name) {
+    document.getElementById('login-error').textContent = 'Напиши своё имя!';
+    return;
+  }
+  currentUserName = name;
+  localStorage.setItem('bh_username', name);
+  document.getElementById('login-screen').style.display = 'none';
+  if (loginTarget === 'quest') startQuest();
+  else landingToGallery();
+}
+
+function skipLogin() {
+  currentUserName = '';
+  document.getElementById('login-screen').style.display = 'none';
+  if (loginTarget === 'quest') startQuest();
+  else landingToGallery();
+}
 
 function startQuest() {
   document.getElementById('landing').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'none';
   document.getElementById('quest').style.display = 'block';
+  // Show user badge
+  const badge = document.getElementById('current-user-badge');
+  if (currentUserName) {
+    badge.textContent = '👤 ' + currentUserName;
+    badge.style.display = 'inline-block';
+  }
   state = {};
   currentStep = 0;
   renderDots();
@@ -908,6 +974,7 @@ async function submitProject() {
 
   const payload = {
     emoji,
+    user_name: currentUserName || null,
     char_name: state.name || null,
     char_creature: state.creature || null,
     char_home: state.home || null,
@@ -1005,6 +1072,14 @@ async function showGallery() {
 
   const tokens = JSON.parse(localStorage.getItem('bh_tokens') || '{}');
 
+  // Show current user + switch button in gallery
+  const galleryTitle = document.querySelector('.gallery-title');
+  if (galleryTitle) {
+    galleryTitle.innerHTML = `🌍 Галерея героев` +
+      (currentUserName ? ` <span style="font-size:.9rem;font-weight:400;color:#888">· 👤 ${currentUserName}</span>` : '') +
+      ` <button onclick="switchUser()" style="font-size:.75rem;background:none;border:1.5px solid #ccc;border-radius:50px;padding:.15rem .65rem;cursor:pointer;color:#888;font-family:'Nunito',sans-serif;margin-left:.4rem">${currentUserName ? 'Сменить имя' : 'Войти'}</button>`;
+  }
+
   if (!projects.length) {
     grid.innerHTML = '<p style="text-align:center;color:#aaa;padding:2rem">Пока нет героев. Будь первым! 🌟</p>';
     return;
@@ -1020,7 +1095,7 @@ async function showGallery() {
       : p.status === 'review'
       ? `<span class="status-badge status-review">🔍 На проверке</span>`
       : `<span class="status-badge status-draft">📝 Черновик</span>`;
-    const canEdit = tokens[p.id];
+    const canEdit = (currentUserName && p.user_name && p.user_name === currentUserName) || tokens[p.id];
     return `<div class="gallery-card" onclick="openProject('${p.id}')">
       ${p.art_url
         ? `<div class="gallery-img" style="background:${bgs[i%4]};padding:0">
@@ -1048,7 +1123,7 @@ function openProject(id) {
   const scenes = Array.isArray(p.scenes) ? p.scenes : [];
   const mats = Array.isArray(p.materials) ? p.materials : [];
   const tokens = JSON.parse(localStorage.getItem('bh_tokens') || '{}');
-  const canEdit = !!tokens[id];
+  const canEdit = (currentUserName && p.user_name && p.user_name === currentUserName) || !!tokens[id];
 
   const modal = document.getElementById('project-modal');
   const content = document.getElementById('project-modal-content');
@@ -1215,6 +1290,20 @@ function startVoice(fieldKey) {
   };
   recognition.start();
   activeRecognition = recognition;
+}
+
+function switchUser() {
+  currentUserName = '';
+  localStorage.removeItem('bh_username');
+  document.getElementById('gallery').style.display = 'none';
+  loginTarget = 'gallery';
+  const ls = document.getElementById('login-screen');
+  document.getElementById('login-title').textContent = 'Как тебя зовут?';
+  document.getElementById('login-hint').textContent = 'Введи имя чтобы видеть свои проекты и редактировать их!';
+  document.getElementById('login-name-input').value = '';
+  ls.style.display = 'flex';
+  ls.style.flexDirection = 'column';
+  setTimeout(() => document.getElementById('login-name-input').focus(), 100);
 }
 
 function restartQuest() {
