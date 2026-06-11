@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -296,9 +296,9 @@ textarea ~ .mic-btn, textarea + .mic-btn{top:.75rem;transform:none}
 <div id="landing">
   <div class="logo-circle">🌿</div>
   <h1 class="landing-title">Create Your<br>Biodiversity Hero!</h1>
-  <p class="landing-sub">Придумай своего героя, напиши историю и создай мультфильм о природе — шаг за шагом, как настоящий режиссёр!</p>
-  <button class="btn-start" onclick="startQuest()">🚀 Начать приключение!</button>
-  <button class="btn-gallery" onclick="landingToGallery()" style="margin-top:.75rem">🌍 Смотреть галерею героев</button>
+  <p class="landing-sub">Create your hero, write a story and make a nature cartoon — step by step, like a real filmmaker!</p>
+  <button class="btn-start" onclick="startQuest()">🚀 Start the Adventure!</button>
+  <button class="btn-gallery" onclick="landingToGallery()" style="margin-top:.75rem">🌍 See the Heroes Gallery</button>
   <div class="landing-animals">🦋 🐸 🦊 🌱 🐝 🦜</div>
 </div>
 
@@ -306,10 +306,10 @@ textarea ~ .mic-btn, textarea + .mic-btn{top:.75rem;transform:none}
 <div id="quest">
   <div class="progress-wrap">
     <div class="progress-top">
-      <span class="progress-label" id="step-label">Шаг 1: Имя героя</span>
+      <span class="progress-label" id="step-label">Step 1: Hero Name</span>
       <div style="display:flex;align-items:center;gap:.75rem">
         <span class="progress-count" id="step-count">1 / 9</span>
-        <button onclick="goToGallery()" style="background:none;border:1.5px solid #B7E4C7;border-radius:50px;padding:.2rem .75rem;font-family:'Nunito',sans-serif;font-size:.8rem;color:#52B788;cursor:pointer;font-weight:700" title="Вернуться в галерею">🌍 Галерея</button>
+        <button onclick="goToGallery()" style="background:none;border:1.5px solid #B7E4C7;border-radius:50px;padding:.2rem .75rem;font-family:'Nunito',sans-serif;font-size:.8rem;color:#52B788;cursor:pointer;font-weight:700" title="Back to gallery">🌍 Gallery</button>
       </div>
     </div>
     <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:11%"></div></div>
@@ -329,28 +329,28 @@ textarea ~ .mic-btn, textarea + .mic-btn{top:.75rem;transform:none}
 
 <!-- GALLERY -->
 <div id="gallery">
-  <div class="gallery-title">🌍 Галерея героев</div>
+  <div class="gallery-title">🌍 Heroes Gallery</div>
   <div class="gallery-grid" id="gallery-grid"></div>
   <div style="text-align:center;margin-top:2rem">
-    <button class="btn-restart" onclick="restartQuest()">➕ Создать нового героя</button>
+    <button class="btn-restart" onclick="restartQuest()">➕ Create a New Hero</button>
   </div>
 </div>
 
 <!-- SUCCESS -->
 <div id="success">
   <div class="success-emoji">🎉</div>
-  <h2 class="success-title">Твой дневник готов!</h2>
-  <p class="success-msg">Потрясающе! Ты создал настоящего Biodiversity Hero и написал историю. Теперь можно анимировать!</p>
+  <h2 class="success-title">Your Journal is Ready!</h2>
+  <p class="success-msg">Amazing! You created a real Biodiversity Hero and wrote a story. Time to animate!</p>
   <div>
-    <button class="btn-gallery" onclick="showGallery()">🌍 Смотреть галерею</button>
-    <button class="btn-restart" onclick="restartQuest()">🔄 Создать ещё одного</button>
+    <button class="btn-gallery" onclick="showGallery()">🌍 View Gallery</button>
+    <button class="btn-restart" onclick="restartQuest()">🔄 Create Another One</button>
   </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 // =============================================
-//  НАСТРОЙКА SUPABASE — замени эти две строки!
+//  SUPABASE CONFIG — replace these two lines!
 // =============================================
 const SUPABASE_URL = 'https://vfkdnyuphkxmluiweise.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZma2RueXVwaGt4bWx1aXdlaXNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODExNzUxNzAsImV4cCI6MjA5Njc1MTE3MH0.llyQohP8fyGFtQoo4gJlIVCIdRNSojzqWUl9QzDFpP0';
@@ -360,106 +360,106 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const STEPS = [
   {
-    id:'basics', emoji:'🦸', title:'Придумай героя',
-    hint:'Расскажи нам самое главное про своего персонажа!',
+    id:'basics', emoji:'🦸', title:'Create Your Hero',
+    hint:'Tell us the most important things about your character!',
     fields:[
-      {key:'name', label:'Как зовут твоего героя? *', type:'text', placeholder:'Например: Луна, Финн, Зелёный Кактус...'},
-      {key:'creature', label:'Кто или что это? *', type:'text', placeholder:'Животное, растение, волшебное существо...'},
-      {key:'home', label:'Где живёт твой герой?', type:'text', placeholder:'Лес, океан, горы, город...'},
-      {key:'madeof', label:'Из чего он сделан или нарисован?', type:'text', placeholder:'Бумага, ткань, карандаш, природные материалы...'},
-      {key:'looks', label:'Как он выглядит? Опиши!', type:'textarea', placeholder:'Цвет, форма, что есть особенного...'},
-      {key:'special', label:'Что делает его особенным? ✨', type:'text', placeholder:'Суперсила, необычная черта, талант...'},
+      {key:'name', label:'What is your hero's name? *', type:'text', placeholder:'E.g. Luna, Finn, Green Cactus...'},
+      {key:'creature', label:'What kind of creature is it? *', type:'text', placeholder:'Animal, plant, magical creature...'},
+      {key:'home', label:'Where does your hero live?', type:'text', placeholder:'Forest, ocean, mountains, city...'},
+      {key:'madeof', label:'What is it made of or drawn with?', type:'text', placeholder:'Paper, fabric, pencil, natural materials...'},
+      {key:'looks', label:'What does it look like? Describe it!', type:'textarea', placeholder:'Color, shape, special features...'},
+      {key:'special', label:'What makes it special? ✨', type:'text', placeholder:'Superpower, unique trait, talent...'},
     ]
   },
   {
-    id:'world', emoji:'🌍', title:'Мир героя',
-    hint:'Теперь расскажи, как живёт твой герой!',
+    id:'world', emoji:'🌍', title:'Hero's World',
+    hint:'Now tell us how your hero lives!',
     fields:[
-      {key:'friends', label:'Кто его друзья?', type:'text', placeholder:'Другие животные, растения, люди...'},
-      {key:'food', label:'Что он ест?', type:'text', placeholder:'Листья, солнечный свет, грибы...'},
-      {key:'daily', label:'Что он делает каждый день?', type:'textarea', placeholder:'Путешествует, помогает другим, учится...'},
-      {key:'loves', label:'Что он обожает? ❤️', type:'text', placeholder:'Дождь, прыжки, петь песни...'},
-      {key:'fears', label:'Чего он боится?', type:'text', placeholder:'Загрязнения, одиночества, огня...'},
-      {key:'biodiversity', label:'Как он связан с природой и биоразнообразием? 🌱', type:'textarea', placeholder:'Опыляет цветы, очищает воду, защищает лес...'},
+      {key:'friends', label:'Who are their friends?', type:'text', placeholder:'Other animals, plants, people...'},
+      {key:'food', label:'What do they eat?', type:'text', placeholder:'Leaves, sunlight, mushrooms...'},
+      {key:'daily', label:'What do they do every day?', type:'textarea', placeholder:'Travels, helps others, learns...'},
+      {key:'loves', label:'What do they love? ❤️', type:'text', placeholder:'Rain, jumping, singing songs...'},
+      {key:'fears', label:'What are they afraid of?', type:'text', placeholder:'Pollution, loneliness, fire...'},
+      {key:'biodiversity', label:'How are they connected to biodiversity? 🌱', type:'textarea', placeholder:'Pollinates flowers, cleans water, protects the forest...'},
     ]
   },
   {
-    id:'journal', emoji:'📓', title:'Стиль дневника',
-    hint:'Выбери, как будет выглядеть твой журнал!',
+    id:'journal', emoji:'📓', title:'Journal Style',
+    hint:'Choose how your journal will look!',
     type:'choice',
     key:'journalStyle',
     choices:[
-      {icon:'🧭', label:'Дневник исследователя'},
-      {icon:'🔬', label:'Журнал натуралиста'},
-      {icon:'📋', label:'Полевые заметки'},
-      {icon:'⚡', label:'Дневник эко-авантюриста'},
-      {icon:'🎬', label:'Журнал аниматора'},
+      {icon:'🧭', label:'Explorer Journal'},
+      {icon:'🔬', label:'Nature Scientist Journal'},
+      {icon:'📋', label:'Field Notes'},
+      {icon:'⚡', label:'Eco Adventurer Journal'},
+      {icon:'🎬', label:'Animation Production Journal'},
     ]
   },
   {
-    id:'method', emoji:'🎨', title:'Как ты будешь создавать?',
-    hint:'Выбери свой способ анимации или рисования!',
+    id:'method', emoji:'🎨', title:'How Will You Create?',
+    hint:'Choose your animation or drawing method!',
     type:'choice',
     key:'method',
     choices:[
-      {icon:'💻', label:'Цифровой рисунок'},
-      {icon:'📸', label:'Стоп-моушн'},
-      {icon:'✂️', label:'Бумажные вырезки'},
-      {icon:'🟡', label:'Пластилин'},
-      {icon:'🎭', label:'Смешанная техника'},
-      {icon:'📷', label:'Рисунок + фото'},
+      {icon:'💻', label:'Digital Drawing'},
+      {icon:'📸', label:'Stop Motion'},
+      {icon:'✂️', label:'Paper Cutout'},
+      {icon:'🟡', label:'Clay / Plasticine'},
+      {icon:'🎭', label:'Mixed Media'},
+      {icon:'📷', label:'Drawing + Photo'},
     ]
   },
   {
-    id:'materials', emoji:'🧰', title:'Список материалов',
-    hint:'Отметь галочкой всё, что тебе понадобится!',
+    id:'materials', emoji:'🧰', title:'Materials Checklist',
+    hint:'Check off everything you will need!',
     type:'checklist',
     key:'materials',
   },
   {
-    id:'story', emoji:'📖', title:'Пишем историю',
-    hint:'Помоги нам понять твою историю — отвечай на вопросы!',
+    id:'story', emoji:'📖', title:'Write Your Story',
+    hint:'Help us understand your story — answer the questions!',
     fields:[
-      {key:'storyHero', label:'Кто главный герой?', type:'text', placeholder:'Твой персонаж и его цель...'},
-      {key:'beginning', label:'Где начинается история?', type:'textarea', placeholder:'Место, время, ситуация...'},
-      {key:'problem', label:'Какая проблема случается? ⚠️', type:'textarea', placeholder:'Что пошло не так в природе?'},
-      {key:'bioTheme', label:'Как биоразнообразие связано с проблемой? 🌿', type:'textarea', placeholder:'Исчезает вид, загрязняется река...'},
-      {key:'helper', label:'Кто помогает герою?', type:'text', placeholder:'Друг, другое животное, мудрый лес...'},
-      {key:'lesson', label:'Чему учится герой? 💡', type:'text', placeholder:'Важная мысль об экологии...'},
-      {key:'ending', label:'Как заканчивается история? 🌈', type:'textarea', placeholder:'Хороший конец с надеждой...'},
+      {key:'storyHero', label:'Who is the main hero?', type:'text', placeholder:'Your character and their goal...'},
+      {key:'beginning', label:'Where does the story begin?', type:'textarea', placeholder:'Place, time, situation...'},
+      {key:'problem', label:'What problem happens? ⚠️', type:'textarea', placeholder:'What went wrong in nature?'},
+      {key:'bioTheme', label:'How is biodiversity involved? 🌿', type:'textarea', placeholder:'A species disappears, a river gets polluted...'},
+      {key:'helper', label:'Who helps the hero?', type:'text', placeholder:'A friend, another animal, the wise forest...'},
+      {key:'lesson', label:'What does the hero learn? 💡', type:'text', placeholder:'An important thought about ecology...'},
+      {key:'ending', label:'How does the story end? 🌈', type:'textarea', placeholder:'A hopeful happy ending...'},
     ]
   },
   {
-    id:'storyboard', emoji:'🎬', title:'Раскадровка',
-    hint:'Опиши 4 сцены своего мультфильма!',
+    id:'storyboard', emoji:'🎬', title:'Storyboard',
+    hint:'Describe 4 scenes of your cartoon!',
     type:'storyboard',
   },
   {
-    id:'artwork', emoji:'🖼️', title:'Твой рисунок',
-    hint:'Загрузи рисунок своего героя (если есть)!',
+    id:'artwork', emoji:'🖼️', title:'Your Artwork',
+    hint:'Upload a drawing of your hero (if you have one)!',
     fields:[
-      {key:'artMaterials', label:'Чем ты рисовал?', type:'text', placeholder:'Карандаши, краски, планшет...'},
-      {key:'artTools', label:'На чём рисовал?', type:'text', placeholder:'Бумага, экран, картон...'},
-      {key:'artStatus', label:'Это набросок или финальный вариант?', type:'select',
-        options:['Первый набросок','Рабочий вариант','Финальный вариант']},
+      {key:'artMaterials', label:'What did you draw with?', type:'text', placeholder:'Pencils, paints, tablet...'},
+      {key:'artTools', label:'What did you draw on?', type:'text', placeholder:'Paper, screen, cardboard...'},
+      {key:'artStatus', label:'Is this a draft or final version?', type:'select',
+        options:['First Draft','Work in Progress','Final Version']},
     ],
     hasUpload: true
   },
   {
-    id:'preview', emoji:'📒', title:'Твой дневник готов!',
-    hint:'Посмотри, что получилось! Потом нажми "Готово" чтобы добавить в галерею.',
+    id:'preview', emoji:'📒', title:'Your Journal is Ready!',
+    hint:'Check out what you made! Then press "Done" to add it to the gallery.',
     type:'preview',
   },
 ];
 
 const MATERIALS = {
-  'Стоп-моушн':['🧸 Персонаж (игрушка или поделка)','🎨 Фон (нарисованный или из ткани)','📱 Смартфон или камера','📐 Штатив или подставка','💡 Хорошее освещение','🌿 Реквизит и детали','🎵 Звук или музыка'],
-  'Цифровой рисунок':['📱 Планшет или телефон с приложением','✏️ Дизайн персонажа','🎨 Нарисованный фон','🖌️ Слои в приложении','🎵 Звук или музыка','💾 Экспорт файла'],
-  'Бумажные вырезки':['✂️ Ножницы','📄 Цветная бумага и картон','🖍️ Цветные карандаши или краски','🖼️ Фоновые листы','📌 Клей или скотч','📷 Камера для съёмки'],
-  'Пластилин':['🟡 Пластилин разных цветов','🔪 Стеки для лепки','📐 Ровная поверхность','📷 Камера или телефон','💡 Лампа для освещения','🎵 Музыка'],
-  'Смешанная техника':['🖍️ Рисунки и зарисовки','📷 Фотоаппарат','✂️ Ножницы и бумага','💻 Редактор фото/видео','🎵 Звук','📁 Папка для материалов'],
-  'Рисунок + фото':['📷 Камера или телефон','✏️ Рисунки от руки','🖼️ Сканер или хорошее освещение','💻 Приложение для монтажа','🎵 Музыка'],
-  'default':['📝 Блокнот и карандаши','📷 Камера или телефон','💡 Хорошее освещение','🎵 Музыка','📁 Папка для проекта'],
+  'Стоп-моушн':['🧸 Character (toy or craft)','🎨 Background (drawn or fabric)','📱 Smartphone or camera','📐 Tripod or stand','💡 Good lighting','🌿 Props and details','🎵 Sound or music'],
+  'Цифровой рисунок':['📱 Tablet or phone with an app','✏️ Character design','🎨 Drawn background','🖌️ Layers in the app','🎵 Sound or music','💾 Export file'],
+  'Бумажные вырезки':['✂️ Scissors','📄 Colored paper and cardboard','🖍️ Colored pencils or paints','🖼️ Background sheets','📌 Glue or tape','📷 Camera for shooting'],
+  'Пластилин':['🟡 Clay in different colors','🔪 Sculpting tools','📐 Flat surface','📷 Camera or phone','💡 Lamp for lighting','🎵 Music'],
+  'Смешанная техника':['🖍️ Drawings and sketches','📷 Camera','✂️ Scissors and paper','💻 Photo/video editor','🎵 Sound','📁 Project folder'],
+  'Рисунок + фото':['📷 Camera or phone','✏️ Hand drawings','🖼️ Scanner or good lighting','💻 Editing app','🎵 Music'],
+  'default':['📝 Notebook and pencils','📷 Camera or phone','💡 Good lighting','🎵 Music','📁 Папка для проекта'],
 };
 
 let state = {};
@@ -488,7 +488,7 @@ function renderDots() {
 
 function renderStep() {
   const step = STEPS[currentStep];
-  document.getElementById('step-label').textContent = `Шаг ${currentStep + 1}: ${step.title}`;
+  document.getElementById('step-label').textContent = `Step ${currentStep + 1}: ${step.title}`;
   document.getElementById('step-count').textContent = `${currentStep + 1} / ${TOTAL}`;
   document.getElementById('progress-fill').style.width = `${((currentStep + 1) / TOTAL) * 100}%`;
   renderDots();
@@ -513,11 +513,11 @@ function renderStep() {
   }
 
   html += `<div class="nav-row">`;
-  if (currentStep > 0) html += `<button class="btn-nav btn-prev" onclick="prevStep()">← Назад</button>`;
+  if (currentStep > 0) html += `<button class="btn-nav btn-prev" onclick="prevStep()">← Back</button>`;
   else html += `<span></span>`;
 
   const isLast = currentStep === TOTAL - 1;
-  html += `<button class="btn-nav btn-next" id="btn-next" onclick="nextStep()">${isLast ? '✅ Готово!' : 'Дальше →'}</button>`;
+  html += `<button class="btn-nav btn-next" id="btn-next" onclick="nextStep()">${isLast ? '✅ Done!' : 'Next →'}</button>`;
   html += `</div></div>`;
 
   container.innerHTML = html;
@@ -527,7 +527,7 @@ function renderStep() {
 function renderFields(step) {
   return step.fields.map(f => {
     const val = state[f.key] || '';
-    const micBtn = (f.type !== 'select') ? `<button type="button" class="mic-btn" onclick="startVoice('${f.key}')" title="Говори — я запишу!">🎤</button>` : '';
+    const micBtn = (f.type !== 'select') ? `<button type="button" class="mic-btn" onclick="startVoice('${f.key}')" title="Speak — I will write it down!">🎤</button>` : '';
     if (f.type === 'select') {
       return `<label class="q-label">${f.label}</label>
         <select id="field-${f.key}" onchange="saveField('${f.key}',this.value)">
@@ -560,7 +560,7 @@ function restoreValues(step) {
 }
 function renderUpload() {
   const hasPreview = state._artPreview;
-  return `<label class="q-label">Загрузи рисунок героя (необязательно):</label>
+  return `<label class="q-label">Upload your hero drawing (optional):</label>
     <div id="upload-zone" style="border:2px dashed #B7E4C7;border-radius:12px;padding:1.25rem;text-align:center;background:white;margin-top:.25rem;transition:border .2s">
       ${hasPreview
         ? `<img src="${state._artPreview}" id="art-preview" style="max-width:100%;max-height:200px;border-radius:10px;margin-bottom:.75rem;object-fit:contain">`
@@ -569,8 +569,8 @@ function renderUpload() {
       <input type="file" accept="image/*" id="art-file-input"
         style="font-size:.9rem;color:#555;width:100%;cursor:pointer"
         onchange="previewArtwork(this)">
-      <p style="font-size:.8rem;color:#aaa;margin-top:.4rem">PNG, JPG, GIF — любой формат</p>
-      ${hasPreview ? `<p style="font-size:.8rem;color:#52B788;margin-top:.25rem">✅ Рисунок выбран!</p>` : ''}
+      <p style="font-size:.8rem;color:#aaa;margin-top:.4rem">PNG, JPG, GIF — any format</p>
+      ${hasPreview ? `<p style="font-size:.8rem;color:#52B788;margin-top:.25rem">✅ Drawing selected!</p>` : ''}
     </div>`;
 }
 
@@ -600,7 +600,7 @@ function previewArtwork(input) {
       conf.style.cssText = 'font-size:.85rem;color:#52B788;margin-top:.35rem;font-weight:700';
       zone.appendChild(conf);
     }
-    conf.textContent = '✅ Рисунок выбран: ' + input.files[0].name;
+    conf.textContent = '✅ Drawing selected: ' + input.files[0].name;
   };
   reader.readAsDataURL(input.files[0]);
 }
@@ -633,9 +633,9 @@ async function askAI() {
   const btn = document.getElementById('ai-btn');
   const result = document.getElementById('ai-result');
   btn.disabled = true;
-  btn.textContent = '⏳ Думаю...';
+  btn.textContent = '⏳ Thinking...';
   result.style.display = 'block';
-  result.innerHTML = `<div style="background:white;border-radius:10px;padding:.85rem 1rem;border:1.5px solid #D8F3DC;font-size:.88rem;color:#aaa">⏳ Придумываю идеи...</div>`;
+  result.innerHTML = `<div style="background:white;border-radius:10px;padding:.85rem 1rem;border:1.5px solid #D8F3DC;font-size:.88rem;color:#aaa">⏳ Coming up with ideas...</div>`;
 
   const heroName = state.name || 'герой';
   const creature = state.creature || 'существо';
@@ -646,16 +646,16 @@ async function askAI() {
   const problem = state.problem || '';
   const lesson = state.lesson || '';
 
-  const prompt = `Ты весёлый помощник для детей 6-12 лет, помогаешь придумать мультфильм о биоразнообразии.
+  const prompt = `You are a fun helper for kids ages 6-12, helping them create a cartoon about biodiversity.
 
-Персонаж: ${heroName} (${creature}), живёт в: ${home}.
-${special ? 'Особенность: ' + special : ''}
-${biodiversity ? 'Связь с природой: ' + biodiversity : ''}
-${problem ? 'Проблема в истории: ' + problem : ''}
-${lesson ? 'Урок истории: ' + lesson : ''}
-Метод анимации: ${method}
+Character: ${heroName} (${creature}), lives in: ${home}.
+${special ? 'Special trait: ' + special : ''}
+${biodiversity ? 'Biodiversity connection: ' + biodiversity : ''}
+${problem ? 'Story problem: ' + problem : ''}
+${lesson ? 'Story lesson: ' + lesson : ''}
+Animation method: ${method}
 
-Придумай для ребёнка 4 идеи для сцен мультфильма — коротко и весело, каждая в одном предложении. Потом дай 1 совет по методу "${method}". Используй эмодзи, отвечай на русском языке, пиши просто как будто разговариваешь с ребёнком.`;
+Come up with 4 scene ideas for the child's cartoon — short and fun, one sentence each. Then give 1 tip for the "${method}". Use emojis, reply in English, write simply as if talking to a child.`;
 
   try {
     // Используем Supabase Edge Function как прокси
@@ -682,19 +682,19 @@ ${lesson ? 'Урок истории: ' + lesson : ''}
     if (!text || text === 'Нет ответа') {
       // Log full response for debugging
       console.log('AI response:', JSON.stringify(data));
-      text = data.error ? `⚠️ Ошибка API: ${data.error}` : '⚠️ Пустой ответ. Проверь ANTHROPIC_API_KEY в Supabase → Settings → Edge Functions → Secrets';
+      text = data.error ? `⚠️ API Error: ${data.error}` : '⚠️ Empty response. Check ANTHROPIC_API_KEY in Supabase → Settings → Edge Functions → Secrets';
     }
 
     result.innerHTML = `
       <div style="background:white;border-radius:10px;padding:.85rem 1rem;border:1.5px solid #52B788;font-size:.88rem;line-height:1.8;color:var(--ink);white-space:pre-wrap">${text}</div>
-      <button onclick="askAI()" style="margin-top:.6rem;background:none;border:1.5px solid var(--green);color:var(--green);border-radius:50px;padding:.3rem .9rem;font-family:'Fredoka One',cursive;font-size:.88rem;cursor:pointer">🔄 Ещё идеи</button>`;
+      <button onclick="askAI()" style="margin-top:.6rem;background:none;border:1.5px solid var(--green);color:var(--green);border-radius:50px;padding:.3rem .9rem;font-family:'Fredoka One',cursive;font-size:.88rem;cursor:pointer">🔄 More Ideas</button>`;
 
   } catch(e) {
     if (e.message === 'edge_function_missing' || e.message.includes('fetch')) {
       result.innerHTML = `
         <div style="background:#FFF8E8;border-radius:10px;padding:.85rem 1rem;border:1.5px solid #F4A300;font-size:.85rem;line-height:1.6;color:#5a3e00">
-          <strong>⚙️ Нужно настроить AI-помощника</strong><br><br>
-          Для работы AI нужна Supabase Edge Function.<br>
+          <strong>⚙️ AI Helper needs to be set up</strong><br><br>
+          AI requires a Supabase Edge Function.<br>
           Создай файл <code>supabase/functions/ask-claude/index.ts</code> с кодом ниже и задеплой командой:<br>
           <code style="background:#fff3cd;padding:.2rem .4rem;border-radius:4px;display:block;margin:.5rem 0;word-break:break-all">supabase functions deploy ask-claude --no-verify-jwt</code>
           <details style="margin-top:.5rem">
@@ -731,15 +731,15 @@ serve(async (req) => {
   })
 })</pre>
           </details>
-          <div style="margin-top:.5rem">Потом добавь ключ: <code>supabase secrets set ANTHROPIC_API_KEY=sk-ant-...</code></div>
+          <div style="margin-top:.5rem">Then add the key: <code>supabase secrets set ANTHROPIC_API_KEY=sk-ant-...</code></div>
         </div>`;
     } else {
-      result.innerHTML = `<div style="background:#FFF0F0;border-radius:10px;padding:.75rem;font-size:.85rem;color:#c00">Ошибка: ${e.message}</div>`;
+      result.innerHTML = `<div style="background:#FFF0F0;border-radius:10px;padding:.75rem;font-size:.85rem;color:#c00">Error: ${e.message}</div>`;
     }
   }
 
   btn.disabled = false;
-  btn.textContent = '✨ Придумать идеи для сцен';
+  btn.textContent = '✨ Get Scene Ideas';
 }
 
 function goToGallery() {
@@ -753,27 +753,27 @@ function renderStoryboard() {
   return `<div class="scene-cards">` +
     scenes.map((s, i) =>
       `<div class="scene-card">
-        <div class="scene-num">🎬 Сцена ${i+1}</div>
-        <label class="q-label" style="margin-top:0">Название сцены</label>
-        <input type="text" placeholder="Например: Утро в лесу" value="${s.title || ''}"
+        <div class="scene-num">🎬 Scene ${i+1}</div>
+        <label class="q-label" style="margin-top:0">Scene title</label>
+        <input type="text" placeholder="E.g. Morning in the Forest" value="${s.title || ''}"
           oninput="saveScene(${i},'title',this.value)">
-        <label class="q-label">Что происходит?</label>
-        <textarea placeholder="Опиши действие..." oninput="saveScene(${i},'action',this.value)"
+        <label class="q-label">What happens?</label>
+        <textarea placeholder="Describe the action..." oninput="saveScene(${i},'action',this.value)"
           style="min-height:60px">${s.action || ''}</textarea>
-        <label class="q-label">Что мы видим?</label>
-        <input type="text" placeholder="Персонаж, фон, детали..." value="${s.visuals || ''}"
+        <label class="q-label">What do we see?</label>
+        <input type="text" placeholder="Character, background, details..." value="${s.visuals || ''}"
           oninput="saveScene(${i},'visuals',this.value)">
-        <label class="q-label">Звук или музыка 🎵</label>
-        <input type="text" placeholder="Птицы, тихая мелодия, шум воды..." value="${s.sound || ''}"
+        <label class="q-label">Sound or music 🎵</label>
+        <input type="text" placeholder="Birds, soft melody, water sound..." value="${s.sound || ''}"
           oninput="saveScene(${i},'sound',this.value)">
       </div>`
     ).join('') + `</div>
 
     <div style="margin-top:1.25rem;background:#F0FDF4;border-radius:14px;padding:1rem 1.25rem;border:1.5px solid #B7E4C7">
-      <div style="font-family:'Fredoka One',cursive;color:var(--green);font-size:1.05rem;margin-bottom:.3rem">🤖 Помощник AI</div>
-      <p style="font-size:.88rem;color:#555;margin-bottom:.75rem">Застрял? Нажми — я придумаю идеи для твоих сцен на основе твоего героя!</p>
+      <div style="font-family:'Fredoka One',cursive;color:var(--green);font-size:1.05rem;margin-bottom:.3rem">🤖 AI Helper</div>
+      <p style="font-size:.88rem;color:#555;margin-bottom:.75rem">Stuck? Press here — I will come up with scene ideas based on your hero!</p>
       <button onclick="askAI()" id="ai-btn" style="background:var(--green);color:white;border:none;border-radius:50px;padding:.5rem 1.25rem;font-family:'Fredoka One',cursive;font-size:.95rem;cursor:pointer">
-        ✨ Придумать идеи для сцен
+        ✨ Get Scene Ideas
       </button>
       <div id="ai-result" style="display:none;margin-top:1rem"></div>
     </div>`;
@@ -786,47 +786,47 @@ function renderJournalPreview() {
   const mats = (s.materials || []);
 
   return `<div class="journal-preview">
-    <div class="journal-header">📒 Дневник: ${s.name || 'Мой герой'}</div>
+    <div class="journal-header">📒 Journal: ${s.name || 'Мой герой'}</div>
 
     ${s._artPreview ? `<img src="${s._artPreview}" style="width:100%;max-height:220px;object-fit:contain;border-radius:12px;margin-bottom:1rem;border:2px solid #D8F3DC">` : ''}
 
     <div class="journal-section">
-      <h4>👤 Персонаж</h4>
+      <h4>👤 Character</h4>
       ${s.name ? `<p><strong>${s.name}</strong>${s.creature ? ' — ' + s.creature : ''}</p>` : ''}
-      ${s.home ? `<p>🏡 Живёт: ${s.home}</p>` : ''}
-      ${s.madeof ? `<p>🔨 Сделан из: ${s.madeof}</p>` : ''}
+      ${s.home ? `<p>🏡 Lives: ${s.home}</p>` : ''}
+      ${s.madeof ? `<p>🔨 Made of: ${s.madeof}</p>` : ''}
       ${s.looks ? `<p style="color:#888;font-size:.88rem">👁 ${s.looks}</p>` : ''}
       ${s.special ? `<p>✨ ${s.special}</p>` : ''}
     </div>
 
     ${(s.friends || s.biodiversity || s.food || s.daily) ? `<div class="journal-section">
-      <h4>🌍 Мир героя</h4>
-      ${s.friends ? `<p>👫 Друзья: ${s.friends}</p>` : ''}
-      ${s.food ? `<p>🍃 Еда: ${s.food}</p>` : ''}
-      ${s.daily ? `<p>☀️ Каждый день: ${s.daily}</p>` : ''}
-      ${s.loves ? `<p>❤️ Любит: ${s.loves}</p>` : ''}
-      ${s.fears ? `<p>😨 Боится: ${s.fears}</p>` : ''}
-      ${s.biodiversity ? `<p>🌿 Связь с природой: ${s.biodiversity}</p>` : ''}
+      <h4>🌍 Hero's World</h4>
+      ${s.friends ? `<p>👫 Friends: ${s.friends}</p>` : ''}
+      ${s.food ? `<p>🍃 Food: ${s.food}</p>` : ''}
+      ${s.daily ? `<p>☀️ Every day: ${s.daily}</p>` : ''}
+      ${s.loves ? `<p>❤️ Loves: ${s.loves}</p>` : ''}
+      ${s.fears ? `<p>😨 Afraid of: ${s.fears}</p>` : ''}
+      ${s.biodiversity ? `<p>🌿 Biodiversity connection: ${s.biodiversity}</p>` : ''}
     </div>` : ''}
 
     ${(s.storyHero || s.problem || s.lesson || s.ending) ? `<div class="journal-section">
-      <h4>📖 История</h4>
-      ${s.storyHero ? `<p>🦸 Герой: ${s.storyHero}</p>` : ''}
-      ${s.beginning ? `<p>🌅 Начало: ${s.beginning}</p>` : ''}
-      ${s.problem ? `<p>⚠️ Проблема: ${s.problem}</p>` : ''}
-      ${s.bioTheme ? `<p>🌱 Биоразнообразие: ${s.bioTheme}</p>` : ''}
-      ${s.helper ? `<p>🤝 Помощник: ${s.helper}</p>` : ''}
-      ${s.lesson ? `<p>💡 Урок: ${s.lesson}</p>` : ''}
-      ${s.ending ? `<p>🌈 Финал: ${s.ending}</p>` : ''}
+      <h4>📖 Story</h4>
+      ${s.storyHero ? `<p>🦸 Hero: ${s.storyHero}</p>` : ''}
+      ${s.beginning ? `<p>🌅 Beginning: ${s.beginning}</p>` : ''}
+      ${s.problem ? `<p>⚠️ Problem: ${s.problem}</p>` : ''}
+      ${s.bioTheme ? `<p>🌱 Biodiversity: ${s.bioTheme}</p>` : ''}
+      ${s.helper ? `<p>🤝 Helper: ${s.helper}</p>` : ''}
+      ${s.lesson ? `<p>💡 Lesson: ${s.lesson}</p>` : ''}
+      ${s.ending ? `<p>🌈 Ending: ${s.ending}</p>` : ''}
     </div>` : ''}
 
     ${scenes.length && scenes.some(sc => sc.title) ? `<div class="journal-section">
-      <h4>🎬 Раскадровка</h4>
-      ${scenes.map((sc, i) => sc.title ? `<p><strong>Сцена ${i+1}:</strong> ${sc.title}${sc.action ? ' — ' + sc.action : ''}</p>` : '').join('')}
+      <h4>🎬 Storyboard</h4>
+      ${scenes.map((sc, i) => sc.title ? `<p><strong>Scene ${i+1}:</strong> ${sc.title}${sc.action ? ' — ' + sc.action : ''}</p>` : '').join('')}
     </div>` : ''}
 
     ${tags.length ? `<div class="journal-section">
-      <h4>🏷️ Стиль и метод</h4>
+      <h4>🏷️ Style and Method</h4>
       ${tags.map(t => `<span class="tag">${t}</span>`).join('')}
     </div>` : ''}
 
@@ -836,7 +836,7 @@ function renderJournalPreview() {
     </div>` : ''}
 
     ${!s.name && !s.creature && !s.problem ? `<p style="color:#aaa;font-size:.9rem;text-align:center;padding:1rem">
-      Дневник пустой — вернись назад и заполни шаги! ←
+      Journal is empty — go back and fill in the steps! ←
     </p>` : ''}
   </div>`;
 }
@@ -887,7 +887,7 @@ function prevStep() {
 async function submitProject() {
   const btn = document.getElementById('btn-next');
   btn.disabled = true;
-  btn.textContent = '⏳ Сохраняем...';
+  btn.textContent = '⏳ Saving...';
 
   const isEdit = !!state._editId;
   const emoji = state._emoji || ['🦋','🐸','🦊','🌱','🐝','🦜','🐙','🌺','🦁','🐋'][Math.floor(Math.random()*10)];
@@ -955,12 +955,12 @@ async function submitProject() {
 
   if (error) {
     // Show the actual error so we can debug
-    btn.textContent = '✅ Готово!';
+    btn.textContent = '✅ Done!';
     const errDiv = document.createElement('div');
     errDiv.style.cssText = 'margin-top:1rem;background:#FFF0F0;border:2px solid #FFB3B3;border-radius:12px;padding:1rem;font-size:.88rem;color:#c00';
-    errDiv.innerHTML = `<strong>⚠️ Ошибка сохранения в Supabase:</strong><br><code style="word-break:break-all">${error.message}</code>
+    errDiv.innerHTML = `<strong>⚠️ Error saving to Supabase:</strong><br><code style="word-break:break-all">${error.message}</code>
       <br><br>Код: <code>${error.code || '—'}</code>
-      <br><br>Данные сохранены локально как резервная копия.`;
+      <br><br>Data saved locally as a backup.`;
     document.getElementById('step-container').querySelector('.step-card').appendChild(errDiv);
     // Fallback to localStorage
     const projects = JSON.parse(localStorage.getItem('bh_projects') || '[]');
@@ -984,7 +984,7 @@ async function showGallery() {
   document.getElementById('success').style.display = 'none';
   document.getElementById('gallery').style.display = 'block';
   const grid = document.getElementById('gallery-grid');
-  grid.innerHTML = '<p style="text-align:center;color:#aaa;padding:2rem">⏳ Загружаем героев...</p>';
+  grid.innerHTML = '<p style="text-align:center;color:#aaa;padding:2rem">⏳ Loading heroes...</p>';
 
   // Try Supabase first — load ALL fields for modal display
   const { data, error } = await sb.from('projects')
@@ -1006,7 +1006,7 @@ async function showGallery() {
   const tokens = JSON.parse(localStorage.getItem('bh_tokens') || '{}');
 
   if (!projects.length) {
-    grid.innerHTML = '<p style="text-align:center;color:#aaa;padding:2rem">Пока нет героев. Будь первым! 🌟</p>';
+    grid.innerHTML = '<p style="text-align:center;color:#aaa;padding:2rem">No heroes yet. Be the first! 🌟</p>';
     return;
   }
 
@@ -1035,7 +1035,7 @@ async function showGallery() {
         <div style="margin-top:.4rem;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">
           ${badge}
           ${canEdit ? `<span style="font-size:.78rem;color:var(--sky-dark);cursor:pointer;font-weight:700"
-            onclick="event.stopPropagation();openProject('${p.id}')">👁 Смотреть</span>` : ''}
+            onclick="event.stopPropagation();openProject('${p.id}')">👁 View</span>` : ''}
         </div>
       </div>
     </div>`;
@@ -1071,37 +1071,37 @@ function openProject(id) {
 
     <div style="display:flex;flex-direction:column;gap:.65rem">
 
-      ${section('👤','Персонаж', [
+      ${section('👤','Character', [
         p.char_creature ? '🐾 ' + p.char_creature : null,
-        p.char_home ? '🏡 Живёт: ' + p.char_home : null,
-        p.char_madeof ? '🔨 Из чего сделан: ' + p.char_madeof : null,
-        p.char_looks ? '👁 Внешность: ' + p.char_looks : null,
+        p.char_home ? '🏡 Lives: ' + p.char_home : null,
+        p.char_madeof ? '🔨 Made of: ' + p.char_madeof : null,
+        p.char_looks ? '👁 Looks: ' + p.char_looks : null,
         p.char_special ? '✨ ' + p.char_special : null,
       ])}
 
-      ${section('🌍','Мир героя', [
-        p.world_friends ? '👫 Друзья: ' + p.world_friends : null,
-        p.world_food ? '🍃 Еда: ' + p.world_food : null,
-        p.world_daily ? '☀️ Каждый день: ' + p.world_daily : null,
-        p.world_loves ? '❤️ Обожает: ' + p.world_loves : null,
-        p.world_fears ? '😨 Боится: ' + p.world_fears : null,
-        p.world_biodiversity ? '🌿 Связь с природой: ' + p.world_biodiversity : null,
+      ${section('🌍','Hero's World', [
+        p.world_friends ? '👫 Friends: ' + p.world_friends : null,
+        p.world_food ? '🍃 Food: ' + p.world_food : null,
+        p.world_daily ? '☀️ Every day: ' + p.world_daily : null,
+        p.world_loves ? '❤️ Loves: ' + p.world_loves : null,
+        p.world_fears ? '😨 Afraid of: ' + p.world_fears : null,
+        p.world_biodiversity ? '🌿 Biodiversity connection: ' + p.world_biodiversity : null,
       ])}
 
-      ${section('📖','История', [
-        p.story_beginning ? '🌅 Начало: ' + p.story_beginning : null,
-        p.story_problem ? '⚠️ Проблема: ' + p.story_problem : null,
-        p.story_bio_theme ? '🌱 Биоразнообразие: ' + p.story_bio_theme : null,
-        p.story_helper ? '🤝 Помощник: ' + p.story_helper : null,
-        p.story_lesson ? '💡 Урок: ' + p.story_lesson : null,
-        p.story_ending ? '🌈 Финал: ' + p.story_ending : null,
+      ${section('📖','Story', [
+        p.story_beginning ? '🌅 Beginning: ' + p.story_beginning : null,
+        p.story_problem ? '⚠️ Problem: ' + p.story_problem : null,
+        p.story_bio_theme ? '🌱 Biodiversity: ' + p.story_bio_theme : null,
+        p.story_helper ? '🤝 Helper: ' + p.story_helper : null,
+        p.story_lesson ? '💡 Lesson: ' + p.story_lesson : null,
+        p.story_ending ? '🌈 Ending: ' + p.story_ending : null,
       ])}
 
       ${scenes.some(s=>s.title) ? `<div style="background:#FAFFF8;border-radius:12px;padding:.85rem 1rem;border:1.5px solid #D8F3DC">
-        <div style="font-family:'Fredoka One',cursive;color:var(--sky-dark);margin-bottom:.5rem">🎬 Раскадровка</div>
+        <div style="font-family:'Fredoka One',cursive;color:var(--sky-dark);margin-bottom:.5rem">🎬 Storyboard</div>
         ${scenes.map((sc,i)=>sc.title?`
           <div style="padding:.4rem 0;border-bottom:1px dashed #D8F3DC">
-            <p style="font-size:.85rem;font-weight:700;color:var(--green)">Сцена ${i+1}: ${sc.title}</p>
+            <p style="font-size:.85rem;font-weight:700;color:var(--green)">Scene ${i+1}: ${sc.title}</p>
             ${sc.action?`<p style="font-size:.82rem;color:#555">${sc.action}</p>`:''}
             ${sc.visuals?`<p style="font-size:.8rem;color:#888">👁 ${sc.visuals}</p>`:''}
             ${sc.sound?`<p style="font-size:.8rem;color:#888">🎵 ${sc.sound}</p>`:''}
@@ -1109,17 +1109,17 @@ function openProject(id) {
         ).join('')}
       </div>` : ''}
 
-      ${section('🧰','Метод и материалы', [
-        p.method ? '🎨 Метод: ' + p.method : null,
-        p.journal_style ? '📓 Стиль: ' + p.journal_style : null,
+      ${section('🧰','Method & Materials', [
+        p.method ? '🎨 Method: ' + p.method : null,
+        p.journal_style ? '📓 Style: ' + p.journal_style : null,
         mats.length ? mats.join(' · ') : null,
       ])}
 
     </div>
 
     ${canEdit ? `<div style="margin-top:1.25rem;padding-top:1rem;border-top:1.5px dashed #D8F3DC">
-      <p style="font-size:.82rem;color:#aaa;margin-bottom:.5rem">Это твой проект — ты можешь его изменить</p>
-      <button onclick="startEditProject('${id}')" style="background:var(--green);color:white;border:none;border-radius:50px;padding:.55rem 1.4rem;font-family:'Fredoka One',cursive;font-size:1rem;cursor:pointer">✏️ Редактировать</button>
+      <p style="font-size:.82rem;color:#aaa;margin-bottom:.5rem">This is your project — you can edit it</p>
+      <button onclick="startEditProject('${id}')" style="background:var(--green);color:white;border:none;border-radius:50px;padding:.55rem 1.4rem;font-family:'Fredoka One',cursive;font-size:1rem;cursor:pointer">✏️ Edit</button>
     </div>` : ''}
   `;
   modal.style.display = 'flex';
@@ -1180,7 +1180,7 @@ let activeRecognition = null;
 function startVoice(fieldKey) {
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SpeechRecognition) {
-    alert('Голосовой ввод не поддерживается в этом браузере. Используй Chrome!');
+    alert('Voice input is not supported in this browser. Try Chrome!');
     return;
   }
   if (activeRecognition) {
@@ -1190,7 +1190,7 @@ function startVoice(fieldKey) {
     return;
   }
   const recognition = new SpeechRecognition();
-  recognition.lang = 'ru-RU';
+  recognition.lang = 'en-US';
   recognition.continuous = false;
   recognition.interimResults = true;
   const field = document.getElementById('field-' + fieldKey);
@@ -1211,7 +1211,7 @@ function startVoice(fieldKey) {
   recognition.onerror = (e) => {
     if (btn) btn.classList.remove('listening');
     activeRecognition = null;
-    if (e.error !== 'aborted') alert('Ошибка микрофона: ' + e.error);
+    if (e.error !== 'aborted') alert('Microphone error: ' + e.error);
   };
   recognition.start();
   activeRecognition = recognition;
