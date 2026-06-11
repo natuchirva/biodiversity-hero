@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Your Biodiversity Hero</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#2D6A4F;--green-light:#52B788;--green-pale:#D8F3DC;
+  --cream:#FFF8ED;--paper:#FFFDF7;
+  --sky:#A8DADC;--sky-dark:#457B9D;
+  --yellow:#F4A300;--yellow-pale:#FFF3CD;
+  --coral:#FF6B6B;--coral-pale:#FFE8E8;
+  --brown:#2C1A0E;--ink:#3D2B1F;
+  --shadow:rgba(44,26,14,0.12);
+}
+body{
+  font-family:'Nunito',sans-serif;
+  background:#E8F5E9;
+  background-image:
+    radial-gradient(circle at 20% 10%, #D8F3DC 0%, transparent 40%),
+    radial-gradient(circle at 80% 90%, #A8DADC33 0%, transparent 40%);
+  min-height:100vh;
+  color:var(--ink);
+}
+
+/* LANDING */
+#landing{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-height:100vh;padding:2rem;text-align:center;
+}
+.logo-circle{
+  width:120px;height:120px;border-radius:50%;
+  background:var(--green);
+  display:flex;align-items:center;justify-content:center;
+  font-size:56px;margin:0 auto 1.5rem;
+  box-shadow:0 4px 20px var(--shadow);
+  animation:float 3s ease-in-out infinite;
+}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.landing-title{
+  font-family:'Fredoka One',cursive;
+  font-size:clamp(2rem,6vw,3.5rem);
+  color:var(--green);
+  line-height:1.1;
+  margin-bottom:.5rem;
+  text-shadow:2px 2px 0 rgba(45,106,79,0.15);
+}
+.landing-sub{
+  font-size:clamp(1rem,2.5vw,1.25rem);
+  color:var(--sky-dark);
+  max-width:520px;
+  margin:0 auto 2rem;
+  line-height:1.6;
+}
+.btn-start{
+  background:var(--green);
+  color:white;
+  border:none;
+  border-radius:50px;
+  padding:.9rem 2.5rem;
+  font-family:'Fredoka One',cursive;
+  font-size:1.4rem;
+  cursor:pointer;
+  box-shadow:0 4px 15px rgba(45,106,79,0.35);
+  transition:transform .15s,box-shadow .15s;
+  letter-spacing:.03em;
+}
+.btn-start:hover{transform:scale(1.04);box-shadow:0 6px 22px rgba(45,106,79,0.4)}
+.landing-animals{
+  display:flex;gap:1.5rem;margin-top:2rem;font-size:2.2rem;
+  animation:wiggle 4s ease-in-out infinite;
+}
+@keyframes wiggle{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+
+/* QUEST WRAPPER */
+#quest{display:none;max-width:720px;margin:0 auto;padding:1.5rem 1rem 4rem;}
+
+/* PROGRESS BAR */
+.progress-wrap{
+  background:white;border-radius:16px;padding:1rem 1.25rem;
+  margin-bottom:1.5rem;box-shadow:0 2px 12px var(--shadow);
+}
+.progress-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem}
+.progress-label{font-family:'Fredoka One',cursive;color:var(--green);font-size:1.1rem}
+.progress-count{font-size:.9rem;color:#888;font-weight:600}
+.progress-bar{height:10px;background:#E0F2E9;border-radius:10px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--green-light),var(--green));border-radius:10px;transition:width .4s ease}
+.step-dots{display:flex;gap:6px;margin-top:.6rem;flex-wrap:wrap}
+.step-dot{
+  width:22px;height:22px;border-radius:50%;
+  background:#E0F2E9;border:2px solid #B7E4C7;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.6rem;font-weight:700;color:#888;
+  transition:all .2s;cursor:default;
+}
+.step-dot.done{background:var(--green-light);border-color:var(--green);color:white}
+.step-dot.current{background:var(--yellow);border-color:var(--yellow);color:white;transform:scale(1.2)}
+
+/* STEP CARD */
+.step-card{
+  background:var(--paper);
+  border-radius:20px;
+  padding:1.75rem 1.5rem;
+  box-shadow:0 3px 18px var(--shadow);
+  border:2.5px solid rgba(45,106,79,0.1);
+  position:relative;
+  overflow:hidden;
+}
+.step-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:5px;
+  background:linear-gradient(90deg,var(--green-light),var(--sky));
+}
+.step-emoji{font-size:2.4rem;margin-bottom:.5rem;display:block}
+.step-title{
+  font-family:'Fredoka One',cursive;
+  font-size:1.65rem;color:var(--green);
+  margin-bottom:.25rem;
+}
+.step-hint{
+  font-size:.95rem;color:var(--sky-dark);
+  margin-bottom:1.5rem;line-height:1.5;
+}
+
+/* FORM ELEMENTS */
+.q-label{
+  display:block;font-weight:700;
+  color:var(--brown);font-size:.95rem;
+  margin-bottom:.35rem;margin-top:1rem;
+}
+.q-label:first-of-type{margin-top:0}
+input[type=text],textarea,select{
+  width:100%;border:2px solid #B7E4C7;border-radius:12px;
+  padding:.65rem .9rem;font-family:'Nunito',sans-serif;font-size:1rem;
+  background:white;color:var(--ink);
+  transition:border .15s;outline:none;resize:vertical;
+}
+input[type=text]:focus,textarea:focus,select:focus{border-color:var(--green-light);box-shadow:0 0 0 3px rgba(82,183,136,0.18)}
+textarea{min-height:80px}
+
+/* CHOICE CARDS */
+.choice-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.75rem;margin-top:.5rem}
+.choice-card{
+  border:2.5px solid #B7E4C7;border-radius:14px;
+  padding:.8rem .7rem;text-align:center;cursor:pointer;
+  background:white;transition:all .15s;
+  font-size:.9rem;font-weight:700;color:var(--ink);
+}
+.choice-card:hover{border-color:var(--green-light);background:#F0FDF4;transform:translateY(-2px)}
+.choice-card.selected{border-color:var(--green);background:var(--green-pale);color:var(--green)}
+.choice-card .card-icon{font-size:1.8rem;display:block;margin-bottom:.35rem}
+
+/* CHECKLIST */
+.checklist{list-style:none;display:flex;flex-direction:column;gap:.5rem;margin-top:.75rem}
+.checklist li{
+  display:flex;align-items:center;gap:.65rem;
+  background:white;border:1.5px solid #D1FAE5;
+  border-radius:10px;padding:.55rem .9rem;
+  font-size:.95rem;cursor:pointer;transition:all .15s;
+}
+.checklist li:hover{border-color:var(--green-light)}
+.checklist li.checked{background:var(--green-pale);border-color:var(--green-light)}
+.check-box{
+  width:22px;height:22px;border-radius:6px;
+  border:2px solid #B7E4C7;background:white;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-size:.85rem;transition:all .15s;
+}
+.checklist li.checked .check-box{background:var(--green);border-color:var(--green);color:white}
+
+/* STORYBOARD */
+.scene-cards{display:flex;flex-direction:column;gap:1rem}
+.scene-card{
+  background:white;border:2px dashed #B7E4C7;
+  border-radius:14px;padding:1rem;
+}
+.scene-num{
+  font-family:'Fredoka One',cursive;color:var(--green);font-size:1.1rem;
+  margin-bottom:.6rem;display:flex;align-items:center;gap:.4rem;
+}
+
+/* JOURNAL PREVIEW */
+.journal-preview{
+  background:#FFFDF0;
+  border:3px solid var(--yellow);
+  border-radius:20px;
+  padding:1.75rem;
+  position:relative;
+  font-family:'Nunito',sans-serif;
+}
+.journal-preview::after{
+  content:'📒';position:absolute;top:-16px;right:20px;font-size:2rem;
+}
+.journal-header{
+  font-family:'Fredoka One',cursive;
+  font-size:1.8rem;color:var(--green);
+  border-bottom:3px dashed var(--green-pale);
+  padding-bottom:.75rem;margin-bottom:1rem;
+}
+.journal-section{margin-bottom:1rem}
+.journal-section h4{
+  font-family:'Fredoka One',cursive;
+  color:var(--sky-dark);font-size:1rem;margin-bottom:.25rem;
+}
+.journal-section p{font-size:.9rem;line-height:1.6;color:var(--ink)}
+.tag{
+  display:inline-block;background:var(--green-pale);
+  color:var(--green);border-radius:20px;
+  padding:.2rem .7rem;font-size:.8rem;font-weight:700;margin:.2rem;
+}
+
+/* NAVIGATION */
+.nav-row{display:flex;justify-content:space-between;align-items:center;margin-top:1.75rem;gap:1rem}
+.btn-nav{
+  border:2.5px solid var(--green);border-radius:50px;
+  padding:.6rem 1.6rem;font-family:'Fredoka One',cursive;
+  font-size:1.05rem;cursor:pointer;transition:all .15s;
+}
+.btn-prev{background:white;color:var(--green)}
+.btn-prev:hover{background:var(--green-pale)}
+.btn-next{background:var(--green);color:white;box-shadow:0 3px 12px rgba(45,106,79,0.3)}
+.btn-next:hover{background:#1B4D3E;box-shadow:0 5px 16px rgba(45,106,79,0.4)}
+.btn-next:disabled{background:#ccc;border-color:#ccc;box-shadow:none;cursor:not-allowed}
+
+/* GALLERY */
+#gallery{display:none;max-width:900px;margin:0 auto;padding:2rem 1rem}
+.gallery-title{font-family:'Fredoka One',cursive;font-size:2rem;color:var(--green);margin-bottom:1.5rem;text-align:center}
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.25rem}
+.gallery-card{
+  background:white;border-radius:16px;
+  box-shadow:0 2px 14px var(--shadow);
+  overflow:hidden;transition:transform .15s;
+  cursor:pointer;
+}
+.gallery-card:hover{transform:translateY(-4px)}
+.gallery-img{
+  height:140px;display:flex;align-items:center;justify-content:center;
+  font-size:4rem;
+}
+.gallery-info{padding:.9rem 1rem}
+.gallery-info h3{font-family:'Fredoka One',cursive;color:var(--green);font-size:1.1rem;margin-bottom:.25rem}
+.gallery-info p{font-size:.82rem;color:#888}
+.status-badge{
+  display:inline-block;border-radius:20px;
+  padding:.18rem .65rem;font-size:.75rem;font-weight:700;margin-top:.4rem;
+}
+.status-featured{background:#FFF3CD;color:#856404}
+.status-review{background:#D1ECF1;color:#0C5460}
+.status-draft{background:#F1F1F1;color:#555}
+
+/* SUCCESS */
+#success{display:none;text-align:center;padding:3rem 1.5rem;max-width:600px;margin:0 auto}
+.success-emoji{font-size:5rem;animation:pop .5s ease}
+@keyframes pop{0%{transform:scale(0)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
+.success-title{font-family:'Fredoka One',cursive;font-size:2.2rem;color:var(--green);margin:1rem 0 .5rem}
+.success-msg{font-size:1.1rem;color:var(--sky-dark);line-height:1.6;margin-bottom:2rem}
+.btn-gallery{
+  background:var(--sky-dark);color:white;border:none;
+  border-radius:50px;padding:.8rem 2rem;
+  font-family:'Fredoka One',cursive;font-size:1.2rem;cursor:pointer;
+  box-shadow:0 3px 14px rgba(69,123,157,0.35);transition:all .15s;margin:.4rem;
+}
+.btn-gallery:hover{background:#2E6187}
+.btn-restart{
+  background:white;color:var(--green);border:2.5px solid var(--green);
+  border-radius:50px;padding:.8rem 2rem;
+  font-family:'Fredoka One',cursive;font-size:1.2rem;cursor:pointer;transition:all .15s;margin:.4rem;
+}
+.btn-restart:hover{background:var(--green-pale)}
+
+/* MIC BUTTON */
+.mic-btn{
+  position:absolute;right:.5rem;top:50%;transform:translateY(-50%);
+  background:none;border:none;font-size:1.2rem;cursor:pointer;
+  opacity:.5;transition:opacity .15s, transform .15s;padding:.2rem;
+  line-height:1;
+}
+.mic-btn:hover{opacity:1}
+.mic-btn.listening{opacity:1;animation:pulse-mic .6s ease-in-out infinite;color:red}
+@keyframes pulse-mic{0%,100%{transform:translateY(-50%) scale(1)}50%{transform:translateY(-50%) scale(1.3)}}
+textarea ~ .mic-btn, textarea + .mic-btn{top:.75rem;transform:none}
+
+@media(max-width:480px){
+  .step-card{padding:1.25rem 1rem}
+  .choice-grid{grid-template-columns:1fr 1fr}
+  .nav-row{flex-wrap:wrap}
+  .btn-nav{flex:1;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- LANDING -->
+<div id="landing">
+  <div class="logo-circle">🌿</div>
+  <h1 class="landing-title">Create Your<br>Biodiversity Hero!</h1>
+  <p class="landing-sub">Придумай своего героя, напиши историю и создай мультфильм о природе — шаг за шагом, как настоящий режиссёр!</p>
+  <button class="btn-start" onclick="startQuest()">🚀 Начать приключение!</button>
+  <button class="btn-gallery" onclick="landingToGallery()" style="margin-top:.75rem">🌍 Смотреть галерею героев</button>
+  <div class="landing-animals">🦋 🐸 🦊 🌱 🐝 🦜</div>
+</div>
+
+<!-- QUEST -->
+<div id="quest">
+  <div class="progress-wrap">
+    <div class="progress-top">
+      <span class="progress-label" id="step-label">Шаг 1: Имя героя</span>
+      <div style="display:flex;align-items:center;gap:.75rem">
+        <span class="progress-count" id="step-count">1 / 9</span>
+        <button onclick="goToGallery()" style="background:none;border:1.5px solid #B7E4C7;border-radius:50px;padding:.2rem .75rem;font-family:'Nunito',sans-serif;font-size:.8rem;color:#52B788;cursor:pointer;font-weight:700" title="Вернуться в галерею">🌍 Галерея</button>
+      </div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:11%"></div></div>
+    <div class="step-dots" id="step-dots"></div>
+  </div>
+
+  <div id="step-container"></div>
+</div>
+
+<!-- PROJECT MODAL -->
+<div id="project-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;align-items:center;justify-content:center;padding:1rem" onclick="if(event.target===this)closeProjectModal()">
+  <div style="background:white;border-radius:20px;max-width:580px;width:100%;max-height:88vh;overflow-y:auto;padding:1.75rem;position:relative">
+    <button onclick="closeProjectModal()" style="position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.4rem;cursor:pointer;color:#aaa;line-height:1">✕</button>
+    <div id="project-modal-content"></div>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<div id="gallery">
+  <div class="gallery-title">🌍 Галерея героев</div>
+  <div class="gallery-grid" id="gallery-grid"></div>
+  <div style="text-align:center;margin-top:2rem">
+    <button class="btn-restart" onclick="restartQuest()">➕ Создать нового героя</button>
+  </div>
+</div>
+
+<!-- SUCCESS -->
+<div id="success">
+  <div class="success-emoji">🎉</div>
+  <h2 class="success-title">Твой дневник готов!</h2>
+  <p class="success-msg">Потрясающе! Ты создал настоящего Biodiversity Hero и написал историю. Теперь можно анимировать!</p>
+  <div>
+    <button class="btn-gallery" onclick="showGallery()">🌍 Смотреть галерею</button>
+    <button class="btn-restart" onclick="restartQuest()">🔄 Создать ещё одного</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+// =============================================
+//  НАСТРОЙКА SUPABASE — замени эти две строки!
+// =============================================
+const SUPABASE_URL = 'https://vfkdnyuphkxmluiweise.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZma2RueXVwaGt4bWx1aXdlaXNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODExNzUxNzAsImV4cCI6MjA5Njc1MTE3MH0.llyQohP8fyGFtQoo4gJlIVCIdRNSojzqWUl9QzDFpP0';
+// =============================================
+
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const STEPS = [
+  {
+    id:'basics', emoji:'🦸', title:'Придумай героя',
+    hint:'Расскажи нам самое главное про своего персонажа!',
+    fields:[
+      {key:'name', label:'Как зовут твоего героя? *', type:'text', placeholder:'Например: Луна, Финн, Зелёный Кактус...'},
+      {key:'creature', label:'Кто или что это? *', type:'text', placeholder:'Животное, растение, волшебное существо...'},
+      {key:'home', label:'Где живёт твой герой?', type:'text', placeholder:'Лес, океан, горы, город...'},
+      {key:'madeof', label:'Из чего он сделан или нарисован?', type:'text', placeholder:'Бумага, ткань, карандаш, природные материалы...'},
+      {key:'looks', label:'Как он выглядит? Опиши!', type:'textarea', placeholder:'Цвет, форма, что есть особенного...'},
+      {key:'special', label:'Что делает его особенным? ✨', type:'text', placeholder:'Суперсила, необычная черта, талант...'},
+    ]
+  },
+  {
+    id:'world', emoji:'🌍', title:'Мир героя',
+    hint:'Теперь расскажи, как живёт твой герой!',
+    fields:[
+      {key:'friends', label:'Кто его друзья?', type:'text', placeholder:'Другие животные, растения, люди...'},
+      {key:'food', label:'Что он ест?', type:'text', placeholder:'Листья, солнечный свет, грибы...'},
+      {key:'daily', label:'Что он делает каждый день?', type:'textarea', placeholder:'Путешествует, помогает другим, учится...'},
+      {key:'loves', label:'Что он обожает? ❤️', type:'text', placeholder:'Дождь, прыжки, петь песни...'},
+      {key:'fears', label:'Чего он боится?', type:'text', placeholder:'Загрязнения, одиночества, огня...'},
+      {key:'biodiversity', label:'Как он связан с природой и биоразнообразием? 🌱', type:'textarea', placeholder:'Опыляет цветы, очищает воду, защищает лес...'},
+    ]
+  },
+  {
+    id:'journal', emoji:'📓', title:'Стиль дневника',
+    hint:'Выбери, как будет выглядеть твой журнал!',
+    type:'choice',
+    key:'journalStyle',
+    choices:[
+      {icon:'🧭', label:'Дневник исследователя'},
+      {icon:'🔬', label:'Журнал натуралиста'},
+      {icon:'📋', label:'Полевые заметки'},
+      {icon:'⚡', label:'Дневник эко-авантюриста'},
+      {icon:'🎬', label:'Журнал аниматора'},
+    ]
+  },
+  {
+    id:'method', emoji:'🎨', title:'Как ты будешь создавать?',
+    hint:'Выбери свой способ анимации или рисования!',
+    type:'choice',
+    key:'method',
+    choices:[
+      {icon:'💻', label:'Цифровой рисунок'},
+      {icon:'📸', label:'Стоп-моушн'},
+      {icon:'✂️', label:'Бумажные вырезки'},
+      {icon:'🟡', label:'Пластилин'},
+      {icon:'🎭', label:'Смешанная техника'},
+      {icon:'📷', label:'Рисунок + фото'},
+    ]
+  },
+  {
+    id:'materials', emoji:'🧰', title:'Список материалов',
+    hint:'Отметь галочкой всё, что тебе понадобится!',
+    type:'checklist',
+    key:'materials',
+  },
+  {
+    id:'story', emoji:'📖', title:'Пишем историю',
+    hint:'Помоги нам понять твою историю — отвечай на вопросы!',
+    fields:[
+      {key:'storyHero', label:'Кто главный герой?', type:'text', placeholder:'Твой персонаж и его цель...'},
+      {key:'beginning', label:'Где начинается история?', type:'textarea', placeholder:'Место, время, ситуация...'},
+      {key:'problem', label:'Какая проблема случается? ⚠️', type:'textarea', placeholder:'Что пошло не так в природе?'},
+      {key:'bioTheme', label:'Как биоразнообразие связано с проблемой? 🌿', type:'textarea', placeholder:'Исчезает вид, загрязняется река...'},
+      {key:'helper', label:'Кто помогает герою?', type:'text', placeholder:'Друг, другое животное, мудрый лес...'},
+      {key:'lesson', label:'Чему учится герой? 💡', type:'text', placeholder:'Важная мысль об экологии...'},
+      {key:'ending', label:'Как заканчивается история? 🌈', type:'textarea', placeholder:'Хороший конец с надеждой...'},
+    ]
+  },
+  {
+    id:'storyboard', emoji:'🎬', title:'Раскадровка',
+    hint:'Опиши 4 сцены своего мультфильма!',
+    type:'storyboard',
+  },
+  {
+    id:'artwork', emoji:'🖼️', title:'Твой рисунок',
+    hint:'Загрузи рисунок своего героя (если есть)!',
+    fields:[
+      {key:'artMaterials', label:'Чем ты рисовал?', type:'text', placeholder:'Карандаши, краски, планшет...'},
+      {key:'artTools', label:'На чём рисовал?', type:'text', placeholder:'Бумага, экран, картон...'},
+      {key:'artStatus', label:'Это набросок или финальный вариант?', type:'select',
+        options:['Первый набросок','Рабочий вариант','Финальный вариант']},
+    ],
+    hasUpload: true
+  },
+  {
+    id:'preview', emoji:'📒', title:'Твой дневник готов!',
+    hint:'Посмотри, что получилось! Потом нажми "Готово" чтобы добавить в галерею.',
+    type:'preview',
+  },
+];
+
+const MATERIALS = {
+  'Стоп-моушн':['🧸 Персонаж (игрушка или поделка)','🎨 Фон (нарисованный или из ткани)','📱 Смартфон или камера','📐 Штатив или подставка','💡 Хорошее освещение','🌿 Реквизит и детали','🎵 Звук или музыка'],
+  'Цифровой рисунок':['📱 Планшет или телефон с приложением','✏️ Дизайн персонажа','🎨 Нарисованный фон','🖌️ Слои в приложении','🎵 Звук или музыка','💾 Экспорт файла'],
+  'Бумажные вырезки':['✂️ Ножницы','📄 Цветная бумага и картон','🖍️ Цветные карандаши или краски','🖼️ Фоновые листы','📌 Клей или скотч','📷 Камера для съёмки'],
+  'Пластилин':['🟡 Пластилин разных цветов','🔪 Стеки для лепки','📐 Ровная поверхность','📷 Камера или телефон','💡 Лампа для освещения','🎵 Музыка'],
+  'Смешанная техника':['🖍️ Рисунки и зарисовки','📷 Фотоаппарат','✂️ Ножницы и бумага','💻 Редактор фото/видео','🎵 Звук','📁 Папка для материалов'],
+  'Рисунок + фото':['📷 Камера или телефон','✏️ Рисунки от руки','🖼️ Сканер или хорошее освещение','💻 Приложение для монтажа','🎵 Музыка'],
+  'default':['📝 Блокнот и карандаши','📷 Камера или телефон','💡 Хорошее освещение','🎵 Музыка','📁 Папка для проекта'],
+};
+
+let state = {};
+let currentStep = 0;
+const TOTAL = STEPS.length;
+
+function startQuest() {
+  document.getElementById('landing').style.display = 'none';
+  document.getElementById('quest').style.display = 'block';
+  state = {};
+  currentStep = 0;
+  renderDots();
+  renderStep();
+}
+
+function renderDots() {
+  const container = document.getElementById('step-dots');
+  container.innerHTML = '';
+  STEPS.forEach((s, i) => {
+    const d = document.createElement('div');
+    d.className = 'step-dot' + (i < currentStep ? ' done' : '') + (i === currentStep ? ' current' : '');
+    d.textContent = i < currentStep ? '✓' : (i + 1);
+    container.appendChild(d);
+  });
+}
+
+function renderStep() {
+  const step = STEPS[currentStep];
+  document.getElementById('step-label').textContent = `Шаг ${currentStep + 1}: ${step.title}`;
+  document.getElementById('step-count').textContent = `${currentStep + 1} / ${TOTAL}`;
+  document.getElementById('progress-fill').style.width = `${((currentStep + 1) / TOTAL) * 100}%`;
+  renderDots();
+
+  const container = document.getElementById('step-container');
+  let html = `<div class="step-card">
+    <span class="step-emoji">${step.emoji}</span>
+    <h2 class="step-title">${step.title}</h2>
+    <p class="step-hint">${step.hint}</p>`;
+
+  if (step.type === 'choice') {
+    html += renderChoices(step);
+  } else if (step.type === 'checklist') {
+    html += renderChecklist();
+  } else if (step.type === 'storyboard') {
+    html += renderStoryboard();
+  } else if (step.type === 'preview') {
+    html += renderJournalPreview();
+  } else {
+    html += renderFields(step);
+    if (step.hasUpload) html += renderUpload();
+  }
+
+  html += `<div class="nav-row">`;
+  if (currentStep > 0) html += `<button class="btn-nav btn-prev" onclick="prevStep()">← Назад</button>`;
+  else html += `<span></span>`;
+
+  const isLast = currentStep === TOTAL - 1;
+  html += `<button class="btn-nav btn-next" id="btn-next" onclick="nextStep()">${isLast ? '✅ Готово!' : 'Дальше →'}</button>`;
+  html += `</div></div>`;
+
+  container.innerHTML = html;
+  restoreValues(step);
+}
+
+function renderFields(step) {
+  return step.fields.map(f => {
+    const val = state[f.key] || '';
+    const micBtn = (f.type !== 'select') ? `<button type="button" class="mic-btn" onclick="startVoice('${f.key}')" title="Говори — я запишу!">🎤</button>` : '';
+    if (f.type === 'select') {
+      return `<label class="q-label">${f.label}</label>
+        <select id="field-${f.key}" onchange="saveField('${f.key}',this.value)">
+          ${f.options.map(o => `<option value="${o}"${val===o?' selected':''}>${o}</option>`).join('')}
+        </select>`;
+    }
+    if (f.type === 'textarea') {
+      return `<label class="q-label">${f.label}</label>
+        <div style="position:relative">
+          <textarea id="field-${f.key}" placeholder="${f.placeholder}"
+            oninput="saveField('${f.key}',this.value)"
+            style="padding-right:2.5rem">${val}</textarea>
+          ${micBtn}
+        </div>`;
+    }
+    return `<label class="q-label">${f.label}</label>
+      <div style="position:relative">
+        <input type="text" id="field-${f.key}" placeholder="${f.placeholder}"
+          value="${val.replace(/"/g,'&quot;')}"
+          oninput="saveField('${f.key}',this.value)"
+          style="padding-right:2.5rem">
+        ${micBtn}
+      </div>`;
+  }).join('');
+}
+
+function restoreValues(step) {
+  // Values are now embedded directly in renderFields — nothing to do here
+  // Keep for any edge cases
+}
+function renderUpload() {
+  const hasPreview = state._artPreview;
+  return `<label class="q-label">Загрузи рисунок героя (необязательно):</label>
+    <div id="upload-zone" style="border:2px dashed #B7E4C7;border-radius:12px;padding:1.25rem;text-align:center;background:white;margin-top:.25rem;transition:border .2s">
+      ${hasPreview
+        ? `<img src="${state._artPreview}" id="art-preview" style="max-width:100%;max-height:200px;border-radius:10px;margin-bottom:.75rem;object-fit:contain">`
+        : `<div style="font-size:2rem;margin-bottom:.4rem" id="upload-icon">🖼️</div>`
+      }
+      <input type="file" accept="image/*" id="art-file-input"
+        style="font-size:.9rem;color:#555;width:100%;cursor:pointer"
+        onchange="previewArtwork(this)">
+      <p style="font-size:.8rem;color:#aaa;margin-top:.4rem">PNG, JPG, GIF — любой формат</p>
+      ${hasPreview ? `<p style="font-size:.8rem;color:#52B788;margin-top:.25rem">✅ Рисунок выбран!</p>` : ''}
+    </div>`;
+}
+
+function previewArtwork(input) {
+  if (!input.files[0]) return;
+  state._artFile = input.files[0];
+  const reader = new FileReader();
+  reader.onload = e => {
+    state._artPreview = e.target.result;
+    const zone = document.getElementById('upload-zone');
+    const icon = document.getElementById('upload-icon');
+    if (icon) icon.remove();
+    // Remove old preview if any
+    const old = document.getElementById('art-preview');
+    if (old) old.remove();
+    const img = document.createElement('img');
+    img.id = 'art-preview';
+    img.src = e.target.result;
+    img.style.cssText = 'max-width:100%;max-height:200px;border-radius:10px;margin-bottom:.75rem;object-fit:contain;display:block;margin-left:auto;margin-right:auto';
+    zone.insertBefore(img, zone.firstChild);
+    zone.style.border = '2px solid #52B788';
+    // Add confirmation text
+    let conf = document.getElementById('upload-confirm');
+    if (!conf) {
+      conf = document.createElement('p');
+      conf.id = 'upload-confirm';
+      conf.style.cssText = 'font-size:.85rem;color:#52B788;margin-top:.35rem;font-weight:700';
+      zone.appendChild(conf);
+    }
+    conf.textContent = '✅ Рисунок выбран: ' + input.files[0].name;
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+function renderChoices(step) {
+  const selected = state[step.key] || '';
+  return `<div class="choice-grid">` +
+    step.choices.map(c =>
+      `<div class="choice-card ${selected === c.label ? 'selected' : ''}"
+        onclick="selectChoice('${step.key}','${c.label}',this)">
+        <span class="card-icon">${c.icon}</span>${c.label}
+      </div>`
+    ).join('') + `</div>`;
+}
+
+function renderChecklist() {
+  const method = state.method || 'default';
+  const items = MATERIALS[method] || MATERIALS['default'];
+  const checked = state.materials || [];
+  return `<ul class="checklist">` +
+    items.map((item) =>
+      `<li class="${checked.includes(item) ? 'checked' : ''}" onclick="toggleCheck(this,'${item.replace(/'/g,"\\'")}')">
+        <div class="check-box">${checked.includes(item) ? '✓' : ''}</div>
+        ${item}
+      </li>`
+    ).join('') + `</ul>`;
+}
+
+async function askAI() {
+  const btn = document.getElementById('ai-btn');
+  const result = document.getElementById('ai-result');
+  btn.disabled = true;
+  btn.textContent = '⏳ Думаю...';
+  result.style.display = 'block';
+  result.innerHTML = `<div style="background:white;border-radius:10px;padding:.85rem 1rem;border:1.5px solid #D8F3DC;font-size:.88rem;color:#aaa">⏳ Придумываю идеи...</div>`;
+
+  const heroName = state.name || 'герой';
+  const creature = state.creature || 'существо';
+  const home = state.home || 'природа';
+  const special = state.special || '';
+  const method = state.method || 'анимация';
+  const biodiversity = state.biodiversity || '';
+  const problem = state.problem || '';
+  const lesson = state.lesson || '';
+
+  const prompt = `Ты весёлый помощник для детей 6-12 лет, помогаешь придумать мультфильм о биоразнообразии.
+
+Персонаж: ${heroName} (${creature}), живёт в: ${home}.
+${special ? 'Особенность: ' + special : ''}
+${biodiversity ? 'Связь с природой: ' + biodiversity : ''}
+${problem ? 'Проблема в истории: ' + problem : ''}
+${lesson ? 'Урок истории: ' + lesson : ''}
+Метод анимации: ${method}
+
+Придумай для ребёнка 4 идеи для сцен мультфильма — коротко и весело, каждая в одном предложении. Потом дай 1 совет по методу "${method}". Используй эмодзи, отвечай на русском языке, пиши просто как будто разговариваешь с ребёнком.`;
+
+  try {
+    // Используем Supabase Edge Function как прокси
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/ask-claude`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+      },
+      body: JSON.stringify({ prompt })
+    });
+
+    if (!res.ok) {
+      // Edge Function не настроена — показываем инструкцию
+      throw new Error('edge_function_missing');
+    }
+
+    const data = await res.json();
+    // Handle both direct text and nested Anthropic response format
+    let text = data.text || data.content;
+    if (!text && data.content && Array.isArray(data.content)) {
+      text = data.content[0]?.text;
+    }
+    if (!text || text === 'Нет ответа') {
+      // Log full response for debugging
+      console.log('AI response:', JSON.stringify(data));
+      text = data.error ? `⚠️ Ошибка API: ${data.error}` : '⚠️ Пустой ответ. Проверь ANTHROPIC_API_KEY в Supabase → Settings → Edge Functions → Secrets';
+    }
+
+    result.innerHTML = `
+      <div style="background:white;border-radius:10px;padding:.85rem 1rem;border:1.5px solid #52B788;font-size:.88rem;line-height:1.8;color:var(--ink);white-space:pre-wrap">${text}</div>
+      <button onclick="askAI()" style="margin-top:.6rem;background:none;border:1.5px solid var(--green);color:var(--green);border-radius:50px;padding:.3rem .9rem;font-family:'Fredoka One',cursive;font-size:.88rem;cursor:pointer">🔄 Ещё идеи</button>`;
+
+  } catch(e) {
+    if (e.message === 'edge_function_missing' || e.message.includes('fetch')) {
+      result.innerHTML = `
+        <div style="background:#FFF8E8;border-radius:10px;padding:.85rem 1rem;border:1.5px solid #F4A300;font-size:.85rem;line-height:1.6;color:#5a3e00">
+          <strong>⚙️ Нужно настроить AI-помощника</strong><br><br>
+          Для работы AI нужна Supabase Edge Function.<br>
+          Создай файл <code>supabase/functions/ask-claude/index.ts</code> с кодом ниже и задеплой командой:<br>
+          <code style="background:#fff3cd;padding:.2rem .4rem;border-radius:4px;display:block;margin:.5rem 0;word-break:break-all">supabase functions deploy ask-claude --no-verify-jwt</code>
+          <details style="margin-top:.5rem">
+            <summary style="cursor:pointer;color:var(--green);font-weight:700">📋 Показать код функции</summary>
+            <pre style="background:#1e1e2e;color:#cdd6f4;border-radius:8px;padding:.75rem;font-size:.75rem;margin-top:.5rem;overflow-x:auto;white-space:pre-wrap">import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, content-type',
+}
+
+serve(async (req) => {
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders })
+  }
+  const { prompt } = await req.json()
+  const resp = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': Deno.env.get('ANTHROPIC_API_KEY')!,
+      'anthropic-version': '2023-06-01',
+    },
+    body: JSON.stringify({
+      model: 'claude-haiku-4-5',
+      max_tokens: 600,
+      messages: [{ role: 'user', content: prompt }]
+    })
+  })
+  const data = await resp.json()
+  const text = data.content?.[0]?.text || ''
+  return new Response(JSON.stringify({ text }), {
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+  })
+})</pre>
+          </details>
+          <div style="margin-top:.5rem">Потом добавь ключ: <code>supabase secrets set ANTHROPIC_API_KEY=sk-ant-...</code></div>
+        </div>`;
+    } else {
+      result.innerHTML = `<div style="background:#FFF0F0;border-radius:10px;padding:.75rem;font-size:.85rem;color:#c00">Ошибка: ${e.message}</div>`;
+    }
+  }
+
+  btn.disabled = false;
+  btn.textContent = '✨ Придумать идеи для сцен';
+}
+
+function goToGallery() {
+  document.getElementById('quest').style.display = 'none';
+  showGallery();
+}
+
+function renderStoryboard() {
+  const scenes = state.scenes || Array(4).fill(null).map((_,i) => ({title:'',action:'',visuals:'',sound:''}));
+  state.scenes = scenes;
+  return `<div class="scene-cards">` +
+    scenes.map((s, i) =>
+      `<div class="scene-card">
+        <div class="scene-num">🎬 Сцена ${i+1}</div>
+        <label class="q-label" style="margin-top:0">Название сцены</label>
+        <input type="text" placeholder="Например: Утро в лесу" value="${s.title || ''}"
+          oninput="saveScene(${i},'title',this.value)">
+        <label class="q-label">Что происходит?</label>
+        <textarea placeholder="Опиши действие..." oninput="saveScene(${i},'action',this.value)"
+          style="min-height:60px">${s.action || ''}</textarea>
+        <label class="q-label">Что мы видим?</label>
+        <input type="text" placeholder="Персонаж, фон, детали..." value="${s.visuals || ''}"
+          oninput="saveScene(${i},'visuals',this.value)">
+        <label class="q-label">Звук или музыка 🎵</label>
+        <input type="text" placeholder="Птицы, тихая мелодия, шум воды..." value="${s.sound || ''}"
+          oninput="saveScene(${i},'sound',this.value)">
+      </div>`
+    ).join('') + `</div>
+
+    <div style="margin-top:1.25rem;background:#F0FDF4;border-radius:14px;padding:1rem 1.25rem;border:1.5px solid #B7E4C7">
+      <div style="font-family:'Fredoka One',cursive;color:var(--green);font-size:1.05rem;margin-bottom:.3rem">🤖 Помощник AI</div>
+      <p style="font-size:.88rem;color:#555;margin-bottom:.75rem">Застрял? Нажми — я придумаю идеи для твоих сцен на основе твоего героя!</p>
+      <button onclick="askAI()" id="ai-btn" style="background:var(--green);color:white;border:none;border-radius:50px;padding:.5rem 1.25rem;font-family:'Fredoka One',cursive;font-size:.95rem;cursor:pointer">
+        ✨ Придумать идеи для сцен
+      </button>
+      <div id="ai-result" style="display:none;margin-top:1rem"></div>
+    </div>`;
+}
+
+function renderJournalPreview() {
+  const s = state;
+  const scenes = s.scenes || [];
+  const tags = [s.journalStyle, s.method].filter(Boolean);
+  const mats = (s.materials || []);
+
+  return `<div class="journal-preview">
+    <div class="journal-header">📒 Дневник: ${s.name || 'Мой герой'}</div>
+
+    ${s._artPreview ? `<img src="${s._artPreview}" style="width:100%;max-height:220px;object-fit:contain;border-radius:12px;margin-bottom:1rem;border:2px solid #D8F3DC">` : ''}
+
+    <div class="journal-section">
+      <h4>👤 Персонаж</h4>
+      ${s.name ? `<p><strong>${s.name}</strong>${s.creature ? ' — ' + s.creature : ''}</p>` : ''}
+      ${s.home ? `<p>🏡 Живёт: ${s.home}</p>` : ''}
+      ${s.madeof ? `<p>🔨 Сделан из: ${s.madeof}</p>` : ''}
+      ${s.looks ? `<p style="color:#888;font-size:.88rem">👁 ${s.looks}</p>` : ''}
+      ${s.special ? `<p>✨ ${s.special}</p>` : ''}
+    </div>
+
+    ${(s.friends || s.biodiversity || s.food || s.daily) ? `<div class="journal-section">
+      <h4>🌍 Мир героя</h4>
+      ${s.friends ? `<p>👫 Друзья: ${s.friends}</p>` : ''}
+      ${s.food ? `<p>🍃 Еда: ${s.food}</p>` : ''}
+      ${s.daily ? `<p>☀️ Каждый день: ${s.daily}</p>` : ''}
+      ${s.loves ? `<p>❤️ Любит: ${s.loves}</p>` : ''}
+      ${s.fears ? `<p>😨 Боится: ${s.fears}</p>` : ''}
+      ${s.biodiversity ? `<p>🌿 Связь с природой: ${s.biodiversity}</p>` : ''}
+    </div>` : ''}
+
+    ${(s.storyHero || s.problem || s.lesson || s.ending) ? `<div class="journal-section">
+      <h4>📖 История</h4>
+      ${s.storyHero ? `<p>🦸 Герой: ${s.storyHero}</p>` : ''}
+      ${s.beginning ? `<p>🌅 Начало: ${s.beginning}</p>` : ''}
+      ${s.problem ? `<p>⚠️ Проблема: ${s.problem}</p>` : ''}
+      ${s.bioTheme ? `<p>🌱 Биоразнообразие: ${s.bioTheme}</p>` : ''}
+      ${s.helper ? `<p>🤝 Помощник: ${s.helper}</p>` : ''}
+      ${s.lesson ? `<p>💡 Урок: ${s.lesson}</p>` : ''}
+      ${s.ending ? `<p>🌈 Финал: ${s.ending}</p>` : ''}
+    </div>` : ''}
+
+    ${scenes.length && scenes.some(sc => sc.title) ? `<div class="journal-section">
+      <h4>🎬 Раскадровка</h4>
+      ${scenes.map((sc, i) => sc.title ? `<p><strong>Сцена ${i+1}:</strong> ${sc.title}${sc.action ? ' — ' + sc.action : ''}</p>` : '').join('')}
+    </div>` : ''}
+
+    ${tags.length ? `<div class="journal-section">
+      <h4>🏷️ Стиль и метод</h4>
+      ${tags.map(t => `<span class="tag">${t}</span>`).join('')}
+    </div>` : ''}
+
+    ${mats.length ? `<div class="journal-section">
+      <h4>🧰 Материалы (${mats.length})</h4>
+      <p style="font-size:.85rem">${mats.join(' · ')}</p>
+    </div>` : ''}
+
+    ${!s.name && !s.creature && !s.problem ? `<p style="color:#aaa;font-size:.9rem;text-align:center;padding:1rem">
+      Дневник пустой — вернись назад и заполни шаги! ←
+    </p>` : ''}
+  </div>`;
+}
+
+function restoreValues(step) {
+  if (step.fields) {
+    step.fields.forEach(f => {
+      const el = document.getElementById('field-' + f.key);
+      if (el && state[f.key]) el.value = state[f.key];
+    });
+  }
+}
+
+function saveField(key, val) { state[key] = val; }
+
+function selectChoice(key, val, el) {
+  state[key] = val;
+  el.closest('.choice-grid').querySelectorAll('.choice-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function toggleCheck(el, item) {
+  state.materials = state.materials || [];
+  const idx = state.materials.indexOf(item);
+  if (idx > -1) { state.materials.splice(idx, 1); el.classList.remove('checked'); el.querySelector('.check-box').textContent = ''; }
+  else { state.materials.push(item); el.classList.add('checked'); el.querySelector('.check-box').textContent = '✓'; }
+}
+
+function saveScene(i, key, val) {
+  state.scenes = state.scenes || Array(4).fill(null).map(() => ({}));
+  state.scenes[i][key] = val;
+}
+
+function nextStep() {
+  if (currentStep < TOTAL - 1) {
+    currentStep++;
+    renderStep();
+    document.getElementById('quest').scrollIntoView({behavior:'smooth'});
+  } else {
+    submitProject();
+  }
+}
+
+function prevStep() {
+  if (currentStep > 0) { currentStep--; renderStep(); }
+}
+
+async function submitProject() {
+  const btn = document.getElementById('btn-next');
+  btn.disabled = true;
+  btn.textContent = '⏳ Сохраняем...';
+
+  const isEdit = !!state._editId;
+  const emoji = state._emoji || ['🦋','🐸','🦊','🌱','🐝','🦜','🐙','🌺','🦁','🐋'][Math.floor(Math.random()*10)];
+
+  // Upload new artwork if selected, otherwise keep existing
+  let artUrl = state._existingArtUrl || null;
+  const artFile = state._artFile;
+  if (artFile) {
+    const fileName = `${Date.now()}_${artFile.name.replace(/[^a-z0-9.]/gi,'_')}`;
+    const { data: upData, error: upErr } = await sb.storage.from('artwork').upload(fileName, artFile);
+    if (!upErr) {
+      const { data: urlData } = sb.storage.from('artwork').getPublicUrl(fileName);
+      artUrl = urlData.publicUrl;
+    } else {
+      console.warn('Upload error:', upErr.message);
+    }
+  }
+
+  const payload = {
+    emoji,
+    char_name: state.name || null,
+    char_creature: state.creature || null,
+    char_home: state.home || null,
+    char_madeof: state.madeof || null,
+    char_looks: state.looks || null,
+    char_special: state.special || null,
+    world_friends: state.friends || null,
+    world_food: state.food || null,
+    world_daily: state.daily || null,
+    world_loves: state.loves || null,
+    world_fears: state.fears || null,
+    world_biodiversity: state.biodiversity || null,
+    journal_style: state.journalStyle || null,
+    method: state.method || null,
+    materials: state.materials || [],
+    story_hero: state.storyHero || null,
+    story_beginning: state.beginning || null,
+    story_problem: state.problem || null,
+    story_bio_theme: state.bioTheme || null,
+    story_helper: state.helper || null,
+    story_lesson: state.lesson || null,
+    story_ending: state.ending || null,
+    scenes: state.scenes || [],
+    art_url: artUrl,
+    art_materials: state.artMaterials || null,
+    art_tools: state.artTools || null,
+    art_status: state.artStatus || null,
+  };
+
+  let error, data;
+
+  if (isEdit) {
+    // UPDATE existing project
+    const res = await sb.from('projects').update(payload).eq('id', state._editId).select().single();
+    error = res.error;
+    data = res.data;
+  } else {
+    // INSERT new project
+    const res = await sb.from('projects').insert({...payload, status:'draft'}).select().single();
+    error = res.error;
+    data = res.data;
+  }
+
+  btn.disabled = false;
+
+  if (error) {
+    // Show the actual error so we can debug
+    btn.textContent = '✅ Готово!';
+    const errDiv = document.createElement('div');
+    errDiv.style.cssText = 'margin-top:1rem;background:#FFF0F0;border:2px solid #FFB3B3;border-radius:12px;padding:1rem;font-size:.88rem;color:#c00';
+    errDiv.innerHTML = `<strong>⚠️ Ошибка сохранения в Supabase:</strong><br><code style="word-break:break-all">${error.message}</code>
+      <br><br>Код: <code>${error.code || '—'}</code>
+      <br><br>Данные сохранены локально как резервная копия.`;
+    document.getElementById('step-container').querySelector('.step-card').appendChild(errDiv);
+    // Fallback to localStorage
+    const projects = JSON.parse(localStorage.getItem('bh_projects') || '[]');
+    projects.push({...payload, id: Date.now()});
+    localStorage.setItem('bh_projects', JSON.stringify(projects));
+    return; // Don't navigate away — let user see the error
+  }
+
+  // Success — save edit token locally
+  const tokens = JSON.parse(localStorage.getItem('bh_tokens') || '{}');
+  tokens[data.id] = data.edit_token;
+  localStorage.setItem('bh_tokens', JSON.stringify(tokens));
+  state._savedId = data.id;
+
+  document.getElementById('quest').style.display = 'none';
+  document.getElementById('success').style.display = 'block';
+  document.getElementById('success').scrollIntoView({behavior:'smooth'});
+}
+
+async function showGallery() {
+  document.getElementById('success').style.display = 'none';
+  document.getElementById('gallery').style.display = 'block';
+  const grid = document.getElementById('gallery-grid');
+  grid.innerHTML = '<p style="text-align:center;color:#aaa;padding:2rem">⏳ Загружаем героев...</p>';
+
+  // Try Supabase first — load ALL fields for modal display
+  const { data, error } = await sb.from('projects')
+    .select('*')
+    .in('status', ['approved','featured','review','draft'])
+    .order('created_at', {ascending: false})
+    .limit(50);
+
+  let projects = data || [];
+
+  // Merge localStorage fallback (for offline/unconfigured mode)
+  const local = JSON.parse(localStorage.getItem('bh_projects') || '[]');
+  if (!data && local.length) projects = local.map(p => ({
+    id: p.id, char_name: p.char_name || p.name, char_creature: p.char_creature || p.creature,
+    char_home: p.char_home || p.home, journal_style: p.journal_style || p.journalStyle,
+    status: p.status || 'draft', emoji: p.emoji,
+  }));
+
+  const tokens = JSON.parse(localStorage.getItem('bh_tokens') || '{}');
+
+  if (!projects.length) {
+    grid.innerHTML = '<p style="text-align:center;color:#aaa;padding:2rem">Пока нет героев. Будь первым! 🌟</p>';
+    return;
+  }
+
+  const bgs = ['#D8F3DC','#E0F4F4','#FFE8E8','#FFF3CD'];
+  // Store projects globally for modal access
+  window._galleryProjects = projects;
+
+  grid.innerHTML = projects.map((p, i) => {
+    const badge = p.status === 'featured'
+      ? `<span class="status-badge status-featured">⭐ Избранное</span>`
+      : p.status === 'review'
+      ? `<span class="status-badge status-review">🔍 На проверке</span>`
+      : `<span class="status-badge status-draft">📝 Черновик</span>`;
+    const canEdit = tokens[p.id];
+    return `<div class="gallery-card" onclick="openProject('${p.id}')">
+      ${p.art_url
+        ? `<div class="gallery-img" style="background:${bgs[i%4]};padding:0">
+             <img src="${p.art_url}" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
+           </div>`
+        : `<div class="gallery-img" style="background:${bgs[i%4]};font-size:3.5rem">${p.emoji || '🌿'}</div>`
+      }
+      <div class="gallery-info">
+        <h3>${p.char_name || 'Без имени'}</h3>
+        <p>${[p.char_creature, p.char_home].filter(Boolean).join(' · ') || '—'}</p>
+        <p style="margin-top:.25rem;font-size:.8rem;color:#aaa">${p.journal_style || ''}</p>
+        <div style="margin-top:.4rem;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">
+          ${badge}
+          ${canEdit ? `<span style="font-size:.78rem;color:var(--sky-dark);cursor:pointer;font-weight:700"
+            onclick="event.stopPropagation();openProject('${p.id}')">👁 Смотреть</span>` : ''}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openProject(id) {
+  const p = (window._galleryProjects || []).find(x => x.id == id);
+  if (!p) return;
+  const scenes = Array.isArray(p.scenes) ? p.scenes : [];
+  const mats = Array.isArray(p.materials) ? p.materials : [];
+  const tokens = JSON.parse(localStorage.getItem('bh_tokens') || '{}');
+  const canEdit = !!tokens[id];
+
+  const modal = document.getElementById('project-modal');
+  const content = document.getElementById('project-modal-content');
+
+  function section(icon, title, rows) {
+    const filled = rows.filter(Boolean);
+    if (!filled.length) return '';
+    return `<div style="background:#FAFFF8;border-radius:12px;padding:.85rem 1rem;border:1.5px solid #D8F3DC">
+      <div style="font-family:'Fredoka One',cursive;color:var(--sky-dark);margin-bottom:.5rem;font-size:1rem">${icon} ${title}</div>
+      ${filled.map(r=>`<p style="font-size:.88rem;line-height:1.6;color:var(--ink)">${r}</p>`).join('')}
+    </div>`;
+  }
+
+  content.innerHTML = `
+    <div style="font-family:'Fredoka One',cursive;font-size:1.55rem;color:var(--green);margin-bottom:1rem">
+      📒 ${p.char_name || 'Без имени'} ${p.emoji || ''}
+    </div>
+
+    ${p.art_url ? `<img src="${p.art_url}" style="width:100%;max-height:220px;object-fit:contain;border-radius:12px;margin-bottom:.85rem;border:2px solid #D8F3DC">` : ''}
+
+    <div style="display:flex;flex-direction:column;gap:.65rem">
+
+      ${section('👤','Персонаж', [
+        p.char_creature ? '🐾 ' + p.char_creature : null,
+        p.char_home ? '🏡 Живёт: ' + p.char_home : null,
+        p.char_madeof ? '🔨 Из чего сделан: ' + p.char_madeof : null,
+        p.char_looks ? '👁 Внешность: ' + p.char_looks : null,
+        p.char_special ? '✨ ' + p.char_special : null,
+      ])}
+
+      ${section('🌍','Мир героя', [
+        p.world_friends ? '👫 Друзья: ' + p.world_friends : null,
+        p.world_food ? '🍃 Еда: ' + p.world_food : null,
+        p.world_daily ? '☀️ Каждый день: ' + p.world_daily : null,
+        p.world_loves ? '❤️ Обожает: ' + p.world_loves : null,
+        p.world_fears ? '😨 Боится: ' + p.world_fears : null,
+        p.world_biodiversity ? '🌿 Связь с природой: ' + p.world_biodiversity : null,
+      ])}
+
+      ${section('📖','История', [
+        p.story_beginning ? '🌅 Начало: ' + p.story_beginning : null,
+        p.story_problem ? '⚠️ Проблема: ' + p.story_problem : null,
+        p.story_bio_theme ? '🌱 Биоразнообразие: ' + p.story_bio_theme : null,
+        p.story_helper ? '🤝 Помощник: ' + p.story_helper : null,
+        p.story_lesson ? '💡 Урок: ' + p.story_lesson : null,
+        p.story_ending ? '🌈 Финал: ' + p.story_ending : null,
+      ])}
+
+      ${scenes.some(s=>s.title) ? `<div style="background:#FAFFF8;border-radius:12px;padding:.85rem 1rem;border:1.5px solid #D8F3DC">
+        <div style="font-family:'Fredoka One',cursive;color:var(--sky-dark);margin-bottom:.5rem">🎬 Раскадровка</div>
+        ${scenes.map((sc,i)=>sc.title?`
+          <div style="padding:.4rem 0;border-bottom:1px dashed #D8F3DC">
+            <p style="font-size:.85rem;font-weight:700;color:var(--green)">Сцена ${i+1}: ${sc.title}</p>
+            ${sc.action?`<p style="font-size:.82rem;color:#555">${sc.action}</p>`:''}
+            ${sc.visuals?`<p style="font-size:.8rem;color:#888">👁 ${sc.visuals}</p>`:''}
+            ${sc.sound?`<p style="font-size:.8rem;color:#888">🎵 ${sc.sound}</p>`:''}
+          </div>`:''
+        ).join('')}
+      </div>` : ''}
+
+      ${section('🧰','Метод и материалы', [
+        p.method ? '🎨 Метод: ' + p.method : null,
+        p.journal_style ? '📓 Стиль: ' + p.journal_style : null,
+        mats.length ? mats.join(' · ') : null,
+      ])}
+
+    </div>
+
+    ${canEdit ? `<div style="margin-top:1.25rem;padding-top:1rem;border-top:1.5px dashed #D8F3DC">
+      <p style="font-size:.82rem;color:#aaa;margin-bottom:.5rem">Это твой проект — ты можешь его изменить</p>
+      <button onclick="startEditProject('${id}')" style="background:var(--green);color:white;border:none;border-radius:50px;padding:.55rem 1.4rem;font-family:'Fredoka One',cursive;font-size:1rem;cursor:pointer">✏️ Редактировать</button>
+    </div>` : ''}
+  `;
+  modal.style.display = 'flex';
+}
+
+function closeProjectModal() {
+  document.getElementById('project-modal').style.display = 'none';
+}
+
+function startEditProject(id) {
+  const p = (window._galleryProjects || []).find(x => x.id == id);
+  if (!p) return;
+  closeProjectModal();
+  state = {
+    // Character
+    name: p.char_name || '', creature: p.char_creature || '',
+    home: p.char_home || '', madeof: p.char_madeof || '',
+    looks: p.char_looks || '', special: p.char_special || '',
+    // World
+    friends: p.world_friends || '', food: p.world_food || '',
+    daily: p.world_daily || '', loves: p.world_loves || '',
+    fears: p.world_fears || '', biodiversity: p.world_biodiversity || '',
+    // Choices
+    journalStyle: p.journal_style || '', method: p.method || '',
+    materials: Array.isArray(p.materials) ? p.materials : [],
+    // Story
+    storyHero: p.story_hero || '', beginning: p.story_beginning || '',
+    problem: p.story_problem || '', bioTheme: p.story_bio_theme || '',
+    helper: p.story_helper || '', lesson: p.story_lesson || '',
+    ending: p.story_ending || '',
+    // Storyboard
+    scenes: Array.isArray(p.scenes) ? p.scenes : Array(4).fill(null).map(()=>({})),
+    // Artwork
+    artMaterials: p.art_materials || '', artTools: p.art_tools || '',
+    artStatus: p.art_status || '',
+    // Meta — preserve existing art and emoji
+    _existingArtUrl: p.art_url || null,
+    _artPreview: p.art_url || null,
+    _emoji: p.emoji || null,
+    _editId: id,
+  };
+  document.getElementById('gallery').style.display = 'none';
+  document.getElementById('quest').style.display = 'block';
+  currentStep = 0;
+  renderDots();
+  renderStep();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function landingToGallery() {
+  document.getElementById('landing').style.display = 'none';
+  showGallery();
+}
+
+// ---- VOICE INPUT ----
+let activeRecognition = null;
+
+function startVoice(fieldKey) {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) {
+    alert('Голосовой ввод не поддерживается в этом браузере. Используй Chrome!');
+    return;
+  }
+  if (activeRecognition) {
+    activeRecognition.stop();
+    activeRecognition = null;
+    document.querySelectorAll('.mic-btn.listening').forEach(b => b.classList.remove('listening'));
+    return;
+  }
+  const recognition = new SpeechRecognition();
+  recognition.lang = 'ru-RU';
+  recognition.continuous = false;
+  recognition.interimResults = true;
+  const field = document.getElementById('field-' + fieldKey);
+  const btn = field?.parentElement?.querySelector('.mic-btn');
+  if (btn) btn.classList.add('listening');
+  const existingVal = state[fieldKey] || '';
+  recognition.onresult = (e) => {
+    const transcript = Array.from(e.results).map(r => r[0].transcript).join('');
+    const newVal = existingVal ? existingVal + ' ' + transcript : transcript;
+    if (field) field.value = newVal;
+    if (e.results[0].isFinal) saveField(fieldKey, newVal);
+  };
+  recognition.onend = () => {
+    if (btn) btn.classList.remove('listening');
+    activeRecognition = null;
+    if (field) saveField(fieldKey, field.value);
+  };
+  recognition.onerror = (e) => {
+    if (btn) btn.classList.remove('listening');
+    activeRecognition = null;
+    if (e.error !== 'aborted') alert('Ошибка микрофона: ' + e.error);
+  };
+  recognition.start();
+  activeRecognition = recognition;
+}
+
+function restartQuest() {
+  document.getElementById('gallery').style.display = 'none';
+  document.getElementById('success').style.display = 'none';
+  document.getElementById('landing').style.display = 'flex';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
